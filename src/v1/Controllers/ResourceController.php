@@ -341,6 +341,11 @@ abstract class ResourceController extends BaseController
     }
 
     protected function fileImageField($item, $field){
-        return link_to_asset('storage/jokes/'.$item[$field], $item[$field], ['target'=>'_blank', 'title'=>$item[$field]]);
+        if (config('filesystems.default')=='public')
+            return link_to_asset('storage/jokes/'.$item[$field], $item[$field], ['target'=>'_blank', 'title'=>$item[$field]]);
+        elseif (config('filesystems.default')=='s3')
+            return link_to(env('S3_URL').env('S3_BUCKET').DIRECTORY_SEPARATOR.$item[$field], $item[$field], ['target'=>'_blank', 'title'=>$item[$field]]);
+        else
+            return $item[$field];
     }
 }
