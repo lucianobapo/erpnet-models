@@ -240,7 +240,7 @@ abstract class ResourceController extends BaseController
 
             $this->validator->with($fields)->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
-            if ($this->fileManager instanceof FileManager::class){
+            if ($this->fileManager instanceof FileManager){
                 $files = request()->allFiles();
 
                 foreach ($files as $key => $value) {
