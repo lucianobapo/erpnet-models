@@ -329,7 +329,7 @@ abstract class ResourceController extends BaseController
                     'showToAdmin' => true,
                     'render' => $render,
                 ],
-                $dataModelSelected, false, $method
+                $dataModelSelected, true, $method
             );
         }
 
