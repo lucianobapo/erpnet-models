@@ -340,5 +340,7 @@ abstract class ResourceController extends BaseController
         return view($this->routeName . '.' . $viewPart, compact('data'));
     }
 
-
+    protected function fileImageField($item, $field){
+        return link_to_asset('storage/jokes/'.$item[$field], $item[$field], ['target'=>'_blank', 'title'=>$item[$field]]);
+    }
 }
