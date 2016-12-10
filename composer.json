@@ -1,0 +1,28 @@
+{
+  "name": "ilhanet/erpnet-models",
+  "license": "MIT",
+  "version": "0.0.1",
+  "authors": [
+    {
+      "name": "Luciano Porto",
+      "email": "luciano.bapo@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^5.5.9 || ^7.0",
+    "ilhanet/erpnet-file-manager": "dev-master",
+    "dingo/api": "1.0.x@dev"
+  },
+  "require-dev": {
+  },
+  "autoload": {
+    "psr-4": {
+      "ErpNET\\Models\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "ErpNET\\ModelsTests\\": "tests/"
+    }
+  }
+}
