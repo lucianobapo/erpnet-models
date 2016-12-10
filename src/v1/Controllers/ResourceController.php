@@ -174,7 +174,7 @@ abstract class ResourceController extends BaseController
             ]);
         }
 
-        return redirect()->back()->with('message', 'Resource deleted.');
+        return redirect(route($this->routeName.'.index'))->with('message', 'Resource deleted.');
     }
 
     /**
@@ -194,7 +194,7 @@ abstract class ResourceController extends BaseController
                 $files = request()->allFiles();
 
                 foreach ($files as $key => $value) {
-                $fields[$key] = $this->fileManager->saveFile(request()->file($key), 'jokes');
+                    $fields[$key] = $this->fileManager->saveFile(request()->file($key), 'jokes');
                 }
             }
 
