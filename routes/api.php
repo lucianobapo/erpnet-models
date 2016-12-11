@@ -39,7 +39,7 @@ $router
                 $router->resource('partner', 'PartnerController');
                 $router->resource('post', 'PostController');
 
-                $router->get('/post/{post}', ['as'=>'post.edit', 'uses'=>'PostController@edit']);
+                $router->get('/post/{post}/edit', ['as'=>'post.edit', 'uses'=>'PostController@edit']);
                 $router->get('/', ['as'=>'post.home', 'uses'=>'PostController@home']);
             });
     });
