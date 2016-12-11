@@ -95,4 +95,13 @@ class PostEloquent extends BaseEloquent
         else
             return $this[$field];
     }
+
+    public function fileImageUrlField($field){
+        if (config('filesystems.default')=='public')
+            return asset('storage/jokes/'.$this[$field], $this[$field]);
+        elseif (config('filesystems.default')=='s3')
+            return (env('S3_URL').env('S3_BUCKET').DIRECTORY_SEPARATOR.'jokes'.DIRECTORY_SEPARATOR.$this[$field]);
+        else
+            return $this[$field];
+    }
 }
