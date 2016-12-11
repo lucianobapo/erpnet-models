@@ -321,12 +321,16 @@ abstract class ResourceController extends BaseController
         if ( class_exists(ErpnetWidgetService::class) && isset($this->routeName) && is_array($this->widgetServiceFields()) ){
             $erpnetWidgetService = app(ErpnetWidgetService::class);
 
+            $layout = 'dataIndexLayout4';
+
+            if ($viewPart=='show') $layout = 'dataShowLayout4';
+
             return $erpnetWidgetService->widget(
                 $data,
                 $this->repository->model(),
                 $this->routeName,
                 $this->widgetServiceFields(),
-                'dataIndexLayout4',
+                $layout,
                 [
                     'showToAdmin' => true,
                     'render' => $render,
