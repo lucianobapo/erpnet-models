@@ -149,10 +149,12 @@ abstract class ResourceController extends BaseController
      */
     public function edit($id)
     {
+        list($render, $allData) = $this->getIndexData();
+
         $foundData = $this->repository->find($id);
 
         //Render welcome if view with route's name not available
-        return $this->viewRender('edit', $foundData);
+        return $this->viewRender('edit',  $allData, $render, $foundData, 'PUT');
     }
 
     /**
