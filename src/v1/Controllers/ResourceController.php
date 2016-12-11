@@ -92,7 +92,7 @@ abstract class ResourceController extends BaseController
         }
 
         //Render welcome if view with route's name not available
-        return view('erpnetWidgetResource::home')-> with(['data'=>$allData, 'routeName'=>$this->routeName]);
+        return view('erpnetWidgetResource::home')->with(['data'=>$allData, 'routePrefix'=>$this->routeName]);
 //        return $this->viewRender('index', $allData, $render);
     }
 

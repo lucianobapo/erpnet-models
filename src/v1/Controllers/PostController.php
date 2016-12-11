@@ -2,6 +2,7 @@
 
 namespace ErpNET\Models\v1\Controllers;
 
+use ErpNET\Models\v1\Entities\PostEloquent;
 use ErpNET\Models\v1\Interfaces\PostRepository;
 use ErpNET\Models\v1\Validators\PostValidator;
 
@@ -48,22 +49,22 @@ class PostController extends ResourceController
             'paramProfileImageSize'=>['attributes' => ['placeholder' => 'ex.: 116x116'], 'label' => 'Tamanho da Imagem do Perfil'],
             'paramProfileImageX'=>['attributes' => ['placeholder' => 'ex.: 10'], 'label' => 'Posição X da Imagem do Perfil'],
             'paramProfileImageY'=>['attributes' => ['placeholder' => 'ex.: 20'], 'label' => 'Posição Y da Imagem do Perfil'],
-            'file'=>['component' => 'widgetFile', 'label' => 'Imagem Antes do Teste', 'customShow'=> function($item){ return $this->fileImageField($item, 'file'); }],
-            'file1' => ['component' => 'widgetFile', 'label' => 'Imagem Aleatória do Teste 1', 'customShow'=> function($item){ return $this->fileImageField($item, 'file1'); }],
-            'file2' => ['component' => 'widgetFile', 'label' => 'Imagem Aleatória do Teste 2', 'customShow'=> function($item){ return $this->fileImageField($item, 'file2'); }],
-            'file3' => ['component' => 'widgetFile', 'label' => 'Imagem Aleatória do Teste 3', 'customShow'=> function($item){ return $this->fileImageField($item, 'file3'); }],
-            'file4' => ['component' => 'widgetFile', 'label' => 'Imagem Aleatória do Teste 4', 'customShow'=> function($item){ return $this->fileImageField($item, 'file4'); }],
-            'file5' => ['component' => 'widgetFile', 'label' => 'Imagem Aleatória do Teste 5', 'customShow'=> function($item){ return $this->fileImageField($item, 'file5'); }],
-            'file6' => ['component' => 'widgetFile', 'label' => 'Imagem Aleatória do Teste 6', 'customShow'=> function($item){ return $this->fileImageField($item, 'file6'); }],
-            'file7' => ['component' => 'widgetFile', 'label' => 'Imagem Aleatória do Teste 7', 'customShow'=> function($item){ return $this->fileImageField($item, 'file7'); }],
-            'file8' => ['component' => 'widgetFile', 'label' => 'Imagem Aleatória do Teste 8', 'customShow'=> function($item){ return $this->fileImageField($item, 'file8'); }],
-            'file9' => ['component' => 'widgetFile', 'label' => 'Imagem Aleatória do Teste 9', 'customShow'=> function($item){ return $this->fileImageField($item, 'file9'); }],
-            'file10' => ['component' => 'widgetFile', 'label' => 'Imagem Aleatória do Teste 10', 'customShow'=> function($item){ return $this->fileImageField($item, 'file10'); }],
-            'file11' => ['component' => 'widgetFile', 'label' => 'Imagem Aleatória do Teste 11', 'customShow'=> function($item){ return $this->fileImageField($item, 'file11'); }],
-            'file12' => ['component' => 'widgetFile', 'label' => 'Imagem Aleatória do Teste 12', 'customShow'=> function($item){ return $this->fileImageField($item, 'file12'); }],
-            'file13' => ['component' => 'widgetFile', 'label' => 'Imagem Aleatória do Teste 13', 'customShow'=> function($item){ return $this->fileImageField($item, 'file13'); }],
-            'file14' => ['component' => 'widgetFile', 'label' => 'Imagem Aleatória do Teste 14', 'customShow'=> function($item){ return $this->fileImageField($item, 'file14'); }],
-            'file15' => ['component' => 'widgetFile', 'label' => 'Imagem Aleatória do Teste 15', 'customShow'=> function($item){ return $this->fileImageField($item, 'file15'); }],
+            'file'=>['component' => 'widgetFile', 'label' => 'Imagem Antes do Teste', 'customShow'=> function(PostEloquent $item){ return $item->fileImageField('file'); }],
+            'file1' => ['component' => 'widgetFile', 'label' => 'Imagem Aleatória do Teste 1', 'customShow'=> function(PostEloquent $item){ return $item->fileImageField('file1'); }],
+            'file2' => ['component' => 'widgetFile', 'label' => 'Imagem Aleatória do Teste 2', 'customShow'=> function(PostEloquent $item){ return $item->fileImageField('file2'); }],
+            'file3' => ['component' => 'widgetFile', 'label' => 'Imagem Aleatória do Teste 3', 'customShow'=> function(PostEloquent $item){ return $item->fileImageField('file3'); }],
+            'file4' => ['component' => 'widgetFile', 'label' => 'Imagem Aleatória do Teste 4', 'customShow'=> function(PostEloquent $item){ return $item->fileImageField('file4'); }],
+            'file5' => ['component' => 'widgetFile', 'label' => 'Imagem Aleatória do Teste 5', 'customShow'=> function(PostEloquent $item){ return $item->fileImageField('file5'); }],
+            'file6' => ['component' => 'widgetFile', 'label' => 'Imagem Aleatória do Teste 6', 'customShow'=> function(PostEloquent $item){ return $item->fileImageField('file6'); }],
+            'file7' => ['component' => 'widgetFile', 'label' => 'Imagem Aleatória do Teste 7', 'customShow'=> function(PostEloquent $item){ return $item->fileImageField('file7'); }],
+            'file8' => ['component' => 'widgetFile', 'label' => 'Imagem Aleatória do Teste 8', 'customShow'=> function(PostEloquent $item){ return $item->fileImageField('file8'); }],
+            'file9' => ['component' => 'widgetFile', 'label' => 'Imagem Aleatória do Teste 9', 'customShow'=> function(PostEloquent $item){ return $item->fileImageField('file9'); }],
+            'file10' => ['component' => 'widgetFile', 'label' => 'Imagem Aleatória do Teste 10', 'customShow'=> function(PostEloquent $item){ return $item->fileImageField('file10'); }],
+            'file11' => ['component' => 'widgetFile', 'label' => 'Imagem Aleatória do Teste 11', 'customShow'=> function(PostEloquent $item){ return $item->fileImageField('file11'); }],
+            'file12' => ['component' => 'widgetFile', 'label' => 'Imagem Aleatória do Teste 12', 'customShow'=> function(PostEloquent $item){ return $item->fileImageField('file12'); }],
+            'file13' => ['component' => 'widgetFile', 'label' => 'Imagem Aleatória do Teste 13', 'customShow'=> function(PostEloquent $item){ return $item->fileImageField('file13'); }],
+            'file14' => ['component' => 'widgetFile', 'label' => 'Imagem Aleatória do Teste 14', 'customShow'=> function(PostEloquent $item){ return $item->fileImageField('file14'); }],
+            'file15' => ['component' => 'widgetFile', 'label' => 'Imagem Aleatória do Teste 15', 'customShow'=> function(PostEloquent $item){ return $item->fileImageField('file15'); }],
         ];
     }
 
