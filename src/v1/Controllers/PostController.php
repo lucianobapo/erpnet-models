@@ -91,4 +91,18 @@ class PostController extends ResourceController
 //        return $this->viewRender('index', $allData, $render);
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int $id
+     *
+     * @return \Illuminate\Contracts\View\View | \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $this->paginateItemCount = 12;
+
+        return parent::show($id);
+    }
+
 }
