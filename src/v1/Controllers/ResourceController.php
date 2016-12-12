@@ -75,26 +75,7 @@ abstract class ResourceController extends BaseController
     }
 
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Contracts\View\View | \Illuminate\Http\Response
-     */
-    public function home()
-    {
-        list($render, $allData) = $this->getIndexData();
 
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $allData,
-            ]);
-        }
-
-        //Render welcome if view with route's name not available
-        return view('erpnetWidgetResource::home')->with(['data'=>$allData, 'routePrefix'=>$this->routeName]);
-//        return $this->viewRender('index', $allData, $render);
-    }
 
     /**
      * Display a listing of the resource.
@@ -281,7 +262,7 @@ abstract class ResourceController extends BaseController
     /**
      * @return array
      */
-    private function getIndexData()
+    protected function getIndexData()
     {
         foreach ($this->defaultCriterias as $defaultCriteria) {
             if (class_exists($defaultCriteria))

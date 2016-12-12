@@ -68,5 +68,27 @@ class PostController extends ResourceController
         ];
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Contracts\View\View | \Illuminate\Http\Response
+     */
+    public function home()
+    {
+        $this->paginateItemCount = 12;
+
+        list($render, $allData) = $this->getIndexData();
+
+        if (request()->wantsJson()) {
+
+            return response()->json([
+                'data' => $allData,
+            ]);
+        }
+
+        //Render welcome if view with route's name not available
+        return view('erpnetWidgetResource::home')->with(['data'=>$allData, 'routePrefix'=>$this->routeName]);
+//        return $this->viewRender('index', $allData, $render);
+    }
 
 }
