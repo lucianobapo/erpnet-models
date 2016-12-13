@@ -87,7 +87,10 @@ class PostController extends ResourceController
         }
 
         //Render welcome if view with route's name not available
-        return view('erpnetWidgetResource::home')->with(['data'=>$allData, 'routePrefix'=>$this->routeName]);
+        return view('erpnetWidgetResource::home')->with([
+            'render' => $render,
+            'data'=>$allData,
+            'routePrefix'=>$this->routeName]);
 //        return $this->viewRender('index', $allData, $render);
     }
 
@@ -101,6 +104,22 @@ class PostController extends ResourceController
     public function show($id)
     {
         $this->paginateItemCount = 12;
+
+        $jokeMakeButton = null;
+        $jokeReMakeButton = null;
+        $loginButton = null;
+        if (Auth::guest()){
+            $loginButton = route('auth.redirect',[
+                'provider'=>'facebook',
+//                'back' => $_SERVER['REQUEST_URI'],
+                'back' => route('joke.show', $joke),
+            ]);
+        } else {
+            $jokeMakeButton = route('joke.jokeMake',[
+                'id'=>Auth::user()->provider_id,
+                'joke'=>$joke[$joke->getRouteKeyName()],
+            ]);
+        }
 
         return parent::show($id);
     }
