@@ -105,23 +105,35 @@ class PostController extends ResourceController
     {
         $this->paginateItemCount = 12;
 
-        $jokeMakeButton = null;
-        $jokeReMakeButton = null;
-        $loginButton = null;
-        if (Auth::guest()){
-            $loginButton = route('auth.redirect',[
-                'provider'=>'facebook',
-//                'back' => $_SERVER['REQUEST_URI'],
-                'back' => route('joke.show', $joke),
-            ]);
-        } else {
-            $jokeMakeButton = route('joke.jokeMake',[
-                'id'=>Auth::user()->provider_id,
-                'joke'=>$joke[$joke->getRouteKeyName()],
+        return parent::show($id);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int $id
+     *
+     * @return \Illuminate\Contracts\View\View | \Illuminate\Http\Response
+     */
+    public function random($id)
+    {
+        $this->paginateItemCount = 12;
+
+        list($render, $allData) = $this->getIndexData();
+
+        $foundData = $this->repository->find($id);
+
+        dd($foundData);
+
+        if (request()->wantsJson()) {
+
+            return response()->json([
+                'data' => $foundData,
             ]);
         }
 
-        return parent::show($id);
+        //Render welcome if view with route's name not available
+        return $this->viewRender('show', $allData, $render, $foundData, 'PUT');
     }
 
 }
