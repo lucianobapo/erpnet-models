@@ -38,6 +38,7 @@ $router
                 $router->resource('order', 'OrderController');
                 $router->resource('partner', 'PartnerController');
                 $router->resource('post', 'PostController');
+                $router->resource('user', 'UserController');
 
                 $router->get('/post/{post}/random', ['as'=>'post.random', 'uses'=>'PostController@random']);
                 $router->get('/post/{post}/edit', ['as'=>'post.edit', 'uses'=>'PostController@edit']);
