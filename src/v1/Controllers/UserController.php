@@ -30,6 +30,11 @@ class UserController extends ResourceController
      */
     protected function widgetServiceFields()
     {
-        return ['id'];
+        return [
+            'mandante',
+            'name',
+            'provider',
+            'provider_id',
+        ];
     }
 }

@@ -6,7 +6,12 @@ class UserEloquent extends BaseEloquent
 {
     protected $table = 'users';
 
-    protected $fillable = [];
+    protected $fillable = [
+        'mandante',
+        'name',
+        'provider',
+        'provider_id',
+    ];
 
     /**
      * Implement fields to be exposed
