@@ -6,10 +6,12 @@ use ErpNET\Models\v1\Interfaces\MandanteRepository;
 use ErpNET\Models\v1\Interfaces\OrderRepository;
 use ErpNET\Models\v1\Interfaces\PartnerRepository;
 use ErpNET\Models\v1\Interfaces\PostRepository;
+use ErpNET\Models\v1\Interfaces\UserRepository;
 use ErpNET\Models\v1\Repositories\MandanteRepositoryEloquent;
 use ErpNET\Models\v1\Repositories\OrderRepositoryEloquent;
 use ErpNET\Models\v1\Repositories\PartnerRepositoryEloquent;
 use ErpNET\Models\v1\Repositories\PostRepositoryEloquent;
+use ErpNET\Models\v1\Repositories\UserRepositoryEloquent;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 
@@ -36,6 +38,7 @@ class ErpnetModelsServiceProvider extends ServiceProvider
         $app->bind(OrderRepository::class, OrderRepositoryEloquent::class);
         $app->bind(MandanteRepository::class, MandanteRepositoryEloquent::class);
         $app->bind(PostRepository::class, PostRepositoryEloquent::class);
+        $app->bind(UserRepository::class, UserRepositoryEloquent::class);
 
         //Routing
         include $routesDir."api.php";
