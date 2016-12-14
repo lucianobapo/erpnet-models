@@ -2,6 +2,9 @@
 
 namespace ErpNET\Models\v1\Controllers;
 
+use ErpNET\Models\v1\Interfaces\UserRepository;
+use ErpNET\Models\v1\Validators\UserValidator;
+
 /**
  * User resource representation.
  *
