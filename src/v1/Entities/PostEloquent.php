@@ -2,7 +2,7 @@
 
 namespace ErpNET\Models\v1\Entities;
 
-use Carbon\Carbon;
+use ErpNET\FileManager\FileManager;
 
 class PostEloquent extends BaseEloquent
 {
