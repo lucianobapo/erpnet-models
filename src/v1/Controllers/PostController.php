@@ -91,7 +91,6 @@ class PostController extends ResourceController
             'render' => $render,
             'data'=>$allData,
             'routePrefix'=>$this->routeName]);
-//        return $this->viewRender('index', $allData, $render);
     }
 
     /**
@@ -137,27 +136,27 @@ class PostController extends ResourceController
     }
 
     /**
-     * @param $foundData
+     * @param $data
      * @return mixed
      */
     protected function randomFile($data)
     {
-        $filtred = [];
+        $filtered = [];
         $continue = true;
         $i=1;
         while($continue){
-            if (property_exists($data, 'file'.$i)){
+            if (isset($data['file'.$i])){
                 if (!empty($data['file'.$i])) {
-                    $filtred[] = 'file'.$i;
+                    $filtered[] = 'file'.$i;
                 }
             } else $continue = false;
+            $i++;
         }
 
-        if (count($filtred)>0){
-            $random = rand(0, count($filtred)-1);
-            return $data[$filtred[$random]];
+        if (count($filtered)>0){
+            $random = rand(0, count($filtered)-1);
+            return $data[$filtered[$random]];
         } else
             return $data['file'];
     }
-
 }
