@@ -134,8 +134,14 @@ abstract class ResourceController extends BaseController
 
         $foundData = $this->repository->find($id);
 
+        $formConfig = [
+            'method' => 'PUT',
+            'files' => true,
+            'route' => [$this->routeName.'.update', $foundData],
+        ];
+
         //Render welcome if view with route's name not available
-        return $this->viewRender('edit',  $allData, $render, $foundData, 'PUT');
+        return $this->render('edit',  $allData, $render, $foundData, $formConfig);
     }
 
     /**
@@ -317,6 +323,48 @@ abstract class ResourceController extends BaseController
                     'render' => $render,
                 ],
                 $dataModelSelected, true, $method
+            );
+        }
+
+        //Render welcome if view with route's name not available
+        if (!isset($this->routeName) || (!view()->exists($this->routeName . '.' . $viewPart)))
+            return view('welcome');
+
+        return view($this->routeName . '.' . $viewPart, compact('data'));
+    }
+
+    /**
+     * Render welcome if view with route's name not available
+     *
+     * @param $viewPart
+     * @param $data
+     * @param null $render
+     * @param null $dataModelSelected
+     * @param string $method
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    protected function render($viewPart, $data, $render = null, $dataModelSelected = null, $formConfig = [])
+    {
+        //Render ErpnetWidgetService if available
+        if ( class_exists(ErpnetWidgetService::class) && isset($this->routeName) && is_array($this->widgetServiceFields()) ){
+            $erpnetWidgetService = app(ErpnetWidgetService::class);
+
+            $layout = 'dataIndexLayout4';
+
+            if ($viewPart=='show') $layout = 'dataShowLayout4';
+
+            return $erpnetWidgetService->render(
+                $layout,
+                [
+                    'data' => $data,
+                    'dataModelSelected' => $dataModelSelected,
+                    'dataModelInstance' => $this->repository->model(),
+                    'routePrefix' => $this->routeName,
+                    'fields' => $this->widgetServiceFields(),
+                    'showToAdmin' => (\Auth::check() && is_callable([\Auth::user(), 'isAdmin']) && \Auth::user()->isAdmin()),
+                    'render' => $render,
+                    'customFormAttr' => $formConfig,
+                ]
             );
         }
 
