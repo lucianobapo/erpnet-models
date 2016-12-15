@@ -313,7 +313,7 @@ abstract class ResourceController extends BaseController
                 $this->widgetServiceFields(),
                 $layout,
                 [
-                    'showToAdmin' => true,
+                    'showToAdmin' => (\Auth::check() && is_callable([\Auth::user(), 'isAdmin']) && \Auth::user()->isAdmin()),
                     'render' => $render,
                 ],
                 $dataModelSelected, true, $method
