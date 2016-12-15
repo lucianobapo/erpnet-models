@@ -117,7 +117,9 @@ class PostController extends ResourceController
      */
     public function random($post, $file = null)
     {
-        $this->paginateItemCount = 12;
+        $this->paginateItemCount = 6;
+
+        list($render, $allData) = $this->getIndexData();
 
         $foundData = $this->repository->find($post);
 
@@ -131,7 +133,7 @@ class PostController extends ResourceController
         }
 
         //Render welcome if view with route's name not available
-        return $this->render('show', null, $foundData);
+        return $this->render('show', $allData, $foundData);
     }
 
     /**
