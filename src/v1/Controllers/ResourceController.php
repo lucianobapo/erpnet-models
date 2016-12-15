@@ -141,7 +141,7 @@ abstract class ResourceController extends BaseController
         ];
 
         //Render welcome if view with route's name not available
-        return $this->render('edit',  $allData, $render, $foundData, $formConfig);
+        return $this->render('edit',  $allData, $foundData, $render, $formConfig);
     }
 
     /**
@@ -343,7 +343,7 @@ abstract class ResourceController extends BaseController
      * @param string $method
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    protected function render($viewPart, $data, $render = null, $dataModelSelected = null, $formConfig = [])
+    protected function render($viewPart, $data = null,  $dataModelSelected = null, $render = null, $formConfig = [])
     {
         //Render ErpnetWidgetService if available
         if ( class_exists(ErpnetWidgetService::class) && isset($this->routeName) && is_array($this->widgetServiceFields()) ){

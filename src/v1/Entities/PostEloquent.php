@@ -98,10 +98,29 @@ class PostEloquent extends BaseEloquent
 
     public function fileImageUrlField($field){
         if (config('filesystems.default')=='public')
-            return asset('storage/jokes/'.$this[$field]);
+            $image = asset('storage/jokes/'.$this[$field]);
         elseif (config('filesystems.default')=='s3')
-            return (env('S3_URL').env('S3_BUCKET').DIRECTORY_SEPARATOR.'jokes'.DIRECTORY_SEPARATOR.$this[$field]);
+            $image = (env('S3_URL').env('S3_BUCKET').DIRECTORY_SEPARATOR.'jokes'.DIRECTORY_SEPARATOR.$this[$field]);
         else
-            return $this[$field];
+            $image = $this[$field];
+
+
+        if(\Request::route()->getName()=='post.random'){
+            $fileManager = new FileManager();
+            $id = \Auth::user()->provider_id;
+            $params = array_merge($this->toArray(), ['name' => \Auth::user()->name,]);
+
+            $imgResource = $fileManager->resourceImgSocialProfileWithBg($this[$field], $id, $params, 'jokes');
+
+            $fileContents = ($imgResource->stream()->__toString());
+
+            // Read image path, convert to base64 encoding
+            $imageData = base64_encode($fileContents);
+            // Format the image SRC:  data:{mime};base64,{data};
+//            dd(mime_content_type($srcImage));
+            $image = 'data: image/png;base64,'.$imageData;
+        }
+
+        return $image;
     }
 }
