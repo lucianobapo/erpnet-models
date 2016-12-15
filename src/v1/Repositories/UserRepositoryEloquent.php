@@ -20,6 +20,7 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository//,
 //    use CacheableRepository;
 
     protected $fieldSearchable = [
+        'provider_id',
 //        'product.name',
 //        'name'=>'like',
 //        'email', // Default Condition "="
