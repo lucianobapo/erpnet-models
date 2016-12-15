@@ -110,19 +110,20 @@ class PostController extends ResourceController
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param $post
+     * @param string | null $file
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Http\Response
      *
-     * @return \Illuminate\Contracts\View\View | \Illuminate\Http\Response
      */
-    public function random($id)
+    public function random($post, $file = null)
     {
         $this->paginateItemCount = 12;
 
         list($render, $allData) = $this->getIndexData();
 
-        $foundData = $this->repository->find($id);
+        $foundData = $this->repository->find($post);
 
-        $foundData['file'] = $this->randomFile($foundData);
+        $foundData['file'] = is_null($file)?$this->randomFile($foundData):$file;
 
         if (request()->wantsJson()) {
 
