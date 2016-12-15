@@ -296,7 +296,7 @@ abstract class ResourceController extends BaseController
      * @param string $method
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    private function viewRender($viewPart, $data, $render = null, $dataModelSelected = null, $method = 'POST')
+    protected function viewRender($viewPart, $data, $render = null, $dataModelSelected = null, $method = 'POST')
     {
         //Render ErpnetWidgetService if available
         if ( class_exists(ErpnetWidgetService::class) && isset($this->routeName) && is_array($this->widgetServiceFields()) ){

@@ -123,7 +123,7 @@ class PostController extends ResourceController
 
         $foundData = $this->repository->find($id);
 
-        dd($foundData);
+        $foundData['file'] = $this->randomFile($foundData);
 
         if (request()->wantsJson()) {
 
@@ -134,6 +134,30 @@ class PostController extends ResourceController
 
         //Render welcome if view with route's name not available
         return $this->viewRender('show', $allData, $render, $foundData, 'PUT');
+    }
+
+    /**
+     * @param $foundData
+     * @return mixed
+     */
+    protected function randomFile($data)
+    {
+        $filtred = [];
+        $continue = true;
+        $i=1;
+        while($continue){
+            if (property_exists($data, 'file'.$i)){
+                if (!empty($data['file'.$i])) {
+                    $filtred[] = 'file'.$i;
+                }
+            } else $continue = false;
+        }
+
+        if (count($filtred)>0){
+            $random = rand(0, count($filtred)-1);
+            return $data[$filtred[$random]];
+        } else
+            return $data['file'];
     }
 
 }
