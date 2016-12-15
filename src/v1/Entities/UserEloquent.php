@@ -9,8 +9,23 @@ class UserEloquent extends BaseEloquent
     protected $fillable = [
         'mandante',
         'name',
+        'avatar',
+        'password',
+        'username',
+        'email',
         'provider',
         'provider_id',
+        'activation_code',
+        'active',
+    ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password', 'remember_token',
     ];
 
     /**
