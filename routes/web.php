@@ -20,13 +20,18 @@ use Illuminate\Routing\Router;
 //Route::resource('partners', '\ErpNET\Models\Controllers\PartnersController');
 
 $routeConfig = [
-    'namespace' => 'ErpNET\Models\Controllers',
+    'namespace' => 'ErpNET\Models\v1\Controllers',
 //            'prefix' => $this->app['config']->get('debugbar.route_prefix'),
 ];
 
 $router = app(Router::class);
 
 $router->group($routeConfig, function(Router $router) {
+
+    $router->get('/post/{post}/random/{file?}', ['as'=>'post.random', 'uses'=>'PostController@random']);
+    $router->get('/post/{post}/edit', ['as'=>'post.edit', 'uses'=>'PostController@edit']);
+    $router->get('/', ['as'=>'post.home', 'uses'=>'PostController@home']);
+
 //    $router->resource('partners', 'PartnersController');
 
 //            $router->get('clockwork/{id}', [
