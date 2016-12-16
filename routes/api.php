@@ -40,7 +40,9 @@ $router
                 $router->resource('post', 'PostController');
                 $router->resource('user', 'UserController');
 
-
+                $router->get('/post/{post}/random/{file?}', ['as'=>'post.random', 'uses'=>'PostController@random']);
+                $router->get('/post/{post}/edit', ['as'=>'post.edit', 'uses'=>'PostController@edit']);
+                $router->get('/', ['as'=>'post.home', 'uses'=>'PostController@home']);
             });
     });
 
