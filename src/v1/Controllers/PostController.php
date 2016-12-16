@@ -125,12 +125,12 @@ class PostController extends ResourceController
 
         $foundData['file'] = is_null($file)?$this->randomFile($foundData):$file;
 
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $foundData,
-            ]);
-        }
+//        if (request()->wantsJson()) {
+//
+//            return response()->json([
+//                'data' => $foundData,
+//            ]);
+//        }
 
         //Render welcome if view with route's name not available
         return $this->render('show', $allData, $foundData);
