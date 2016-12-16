@@ -105,7 +105,7 @@ class PostEloquent extends BaseEloquent
             $image = $this[$field];
 
 
-        if($getContent){
+        if(\Request::route()->getName()=='post.random' && $getContent){
             $fileManager = new FileManager();
             $id = \Auth::user()->provider_id;
             $params = array_merge($this->toArray(), ['name' => \Auth::user()->name,]);
