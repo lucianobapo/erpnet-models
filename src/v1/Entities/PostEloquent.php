@@ -96,7 +96,7 @@ class PostEloquent extends BaseEloquent
             return $this[$field];
     }
 
-    public function fileImageUrlField($field){
+    public function fileImageUrlField($field, $getContent = false){
         if (config('filesystems.default')=='public')
             $image = asset('storage/jokes/'.$this[$field]);
         elseif (config('filesystems.default')=='s3')
@@ -105,7 +105,7 @@ class PostEloquent extends BaseEloquent
             $image = $this[$field];
 
 
-        if(\Request::route()->getName()=='post.random'){
+        if($getContent){
             $fileManager = new FileManager();
             $id = \Auth::user()->provider_id;
             $params = array_merge($this->toArray(), ['name' => \Auth::user()->name,]);
