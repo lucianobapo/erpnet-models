@@ -41,7 +41,8 @@ $router
                 $router->resource('user', 'UserController');
                 $router->resource('page', 'PageController');
 
-                $router->get('/post/{post}/random/{file?}', ['as'=>'post.random', 'uses'=>'PostController@random']);
+                $router->get('/post/{post}/showRandom/{providerId}/{file}', ['as'=>'post.showRandom', 'uses'=>'PostController@showRandom']);
+                $router->get('/post/{post}/random', ['as'=>'post.random', 'uses'=>'PostController@random']);
                 $router->get('/post/{post}/edit', ['as'=>'post.edit', 'uses'=>'PostController@edit']);
                 $router->get('/', ['as'=>'post.home', 'uses'=>'PostController@home']);
             });
