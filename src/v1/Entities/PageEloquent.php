@@ -8,7 +8,10 @@ class PageEloquent extends BaseEloquent
     protected $table = 'pages';
 
     protected $fillable = [
-        'id',
+        'nome',
+        'titulo',
+        'descricao',
+        'conteudo',
     ];
 
     /**

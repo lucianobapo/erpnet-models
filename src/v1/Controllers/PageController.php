@@ -36,7 +36,10 @@ class PageController extends ResourceController
     protected function widgetServiceFields()
     {
         return [
-            'id',
+            'nome',
+            'titulo',
+            'descricao',
+            'conteudo',
         ];
     }
 }
