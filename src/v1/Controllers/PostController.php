@@ -4,6 +4,8 @@ namespace ErpNET\Models\v1\Controllers;
 
 use ErpNET\Models\v1\Entities\PostEloquent;
 use ErpNET\Models\v1\Interfaces\PostRepository;
+use ErpNET\Models\v1\Interfaces\UserRepository;
+use ErpNET\Models\v1\Repositories\UserRepositoryEloquent;
 use ErpNET\Models\v1\Validators\PostValidator;
 
 /**
@@ -116,7 +118,7 @@ class PostController extends ResourceController
      * @return \Illuminate\Contracts\View\View|\Illuminate\Http\Response
      *
      */
-    public function random($post, $file = null)
+    public function random($post)
     {
         $this->paginateItemCount = 6;
 
@@ -124,17 +126,56 @@ class PostController extends ResourceController
 
         $foundData = $this->repository->find($post);
 
-        $foundData['file'] = is_null($file)?$this->randomFile($foundData):$file;
+        $foundData['file'] = $this->randomFile($foundData);
 
-//        if (request()->wantsJson()) {
-//
-//            return response()->json([
-//                'data' => $foundData,
-//            ]);
-//        }
+        if (request()->wantsJson()) {
+
+            return response()->json([
+                'data' => $foundData,
+            ]);
+        }
 
         //Render welcome if view with route's name not available
         return $this->render('show', $allData, $foundData);
+    }
+    /**
+     * Display the specified resource.
+     *
+     * @param $post
+     * @param string | null $file
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     *
+     */
+    public function showRandom($post, $providerId, $file)
+    {
+        $this->paginateItemCount = 6;
+
+        list($render, $allData) = $this->getIndexData();
+
+        $foundUser = app(UserRepository::class)->findByField('provider_id', $providerId)->first();
+
+        $foundData = $this->repository->find($post);
+
+        $foundData['file'] = $file;
+
+        if (request()->wantsJson()) {
+
+            return response()->json([
+                'data' => $foundData,
+            ]);
+        }
+
+        $formConfig = [
+            'method' => 'PUT',
+            'files' => true,
+            'foundUser' => $foundUser,
+            'route' => [$this->routeName.'.update', $foundData],
+        ];
+        //Render welcome if view with route's name not available
+        return $this->render('show', $allData, $foundData, $render, $formConfig);
+
+        //Render welcome if view with route's name not available
+//        return $this->render('show', $allData, $foundData);
     }
 
     /**

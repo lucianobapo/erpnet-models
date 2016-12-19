@@ -106,7 +106,7 @@ class PostEloquent extends BaseEloquent
             return $this[$field];
     }
 
-    public function fileImageUrlField($field, $getContent = false){
+    public function fileImageUrlField($field, $getContent = false, $foundUser = null){
         if (config('filesystems.default')=='public')
             $image = asset('storage/jokes/'.$this[$field]);
         elseif (config('filesystems.default')=='s3')
@@ -115,11 +115,16 @@ class PostEloquent extends BaseEloquent
             $image = $this[$field];
 
 
-        if(\Request::route()->getName()=='post.random' && $getContent){
-            $fileManager = new FileManager();
+        if(\Auth::check()){
             $id = \Auth::user()->provider_id;
             $params = array_merge($this->toArray(), ['name' => \Auth::user()->name,]);
+        }elseif(!is_null($foundUser)){
+            $id = $foundUser->provider_id;
+            $params = array_merge($this->toArray(), ['name' => $foundUser->name,]);
+        }
 
+        if($getContent && isset($id) && isset($params)){
+            $fileManager = new FileManager();
             $imgResource = $fileManager->resourceImgSocialProfileWithBg($this[$field], $id, $params, 'jokes');
 
             $fileContents = ($imgResource->stream()->__toString());
@@ -127,7 +132,7 @@ class PostEloquent extends BaseEloquent
             // Read image path, convert to base64 encoding
             $imageData = base64_encode($fileContents);
             // Format the image SRC:  data:{mime};base64,{data};
-//            dd(mime_content_type($srcImage));
+            //            dd(mime_content_type($srcImage));
             $image = 'data: image/png;base64,'.$imageData;
         }
 
