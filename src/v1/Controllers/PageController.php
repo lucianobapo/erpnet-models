@@ -2,6 +2,7 @@
 
 namespace ErpNET\Models\v1\Controllers;
 
+use ErpNET\Models\v1\Criteria\PageOrderedCriteria;
 use ErpNET\Models\v1\Interfaces\PageRepository;
 use ErpNET\Models\v1\Validators\PageValidator;
 
@@ -26,7 +27,7 @@ class PageController extends ResourceController
      * @var array
      */
     protected $defaultCriterias = [
-//        OpenOrdersCriteria::class,
+        PageOrderedCriteria::class,
     ];
 
     /**
