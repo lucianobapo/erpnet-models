@@ -12,6 +12,7 @@ class PageEloquent extends BaseEloquent
     protected $table = 'pages';
 
     protected $fillable = [
+        'ordem',
         'rota',
         'nome',
         'h1',

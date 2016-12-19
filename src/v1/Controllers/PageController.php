@@ -36,6 +36,7 @@ class PageController extends ResourceController
     protected function widgetServiceFields()
     {
         return [
+            'ordem',
             'rota',
             'nome',
             'h1',
