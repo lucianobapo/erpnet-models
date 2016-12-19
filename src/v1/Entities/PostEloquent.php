@@ -123,7 +123,8 @@ class PostEloquent extends BaseEloquent
             $params = array_merge($this->toArray(), ['name' => $foundUser->name,]);
         }
 
-        if($getContent && isset($id) && isset($params)){
+        $rtName = \Request::route()->getName();
+        if(($rtName =='post.random' || $rtName =='post.showRandom') && $getContent && isset($id) && isset($params)){
             $fileManager = new FileManager();
             $imgResource = $fileManager->resourceImgSocialProfileWithBg($this[$field], $id, $params, 'jokes');
 
@@ -135,6 +136,7 @@ class PostEloquent extends BaseEloquent
             //            dd(mime_content_type($srcImage));
             $image = 'data: image/png;base64,'.$imageData;
         }
+
 
         return $image;
     }
