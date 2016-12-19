@@ -38,6 +38,7 @@ class PostController extends ResourceController
     {
         return [
             'mandante' => ['value' => 'testesdivertidos'],
+            'pageId',
             'title'=> ['customShow'=> function(PostEloquent $item){ return link_to_route('post.show', $item['title'], [$item], ['title'=>'Abrir '.$item['title']]); }],
             'description',
             'paramName'=>['component' => 'widgetCheckbox', 'value' => '1', 'label' => 'Mostrar Nome do Perfil'],

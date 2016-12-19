@@ -11,6 +11,7 @@ class PostEloquent extends BaseEloquent
 
     protected $fillable = [
         'mandante',
+        'pageId',
         'title',
         'description',
         'file',
@@ -85,6 +86,15 @@ class PostEloquent extends BaseEloquent
      */
     public function partner() {
 //        return $this->belongsTo(PartnerEloquent::class);
+    }
+
+    /**
+     * A Post belongs to a Page.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function page() {
+        return $this->belongsTo(PageEloquent::class);
     }
 
     public function fileImageField($field){
