@@ -12,9 +12,11 @@ class PageEloquent extends BaseEloquent
     protected $table = 'pages';
 
     protected $fillable = [
+        'rota',
         'nome',
-        'titulo',
-        'descricao',
+        'h1',
+        'h2',
+        'view',
         'conteudo',
     ];
 

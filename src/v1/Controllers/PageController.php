@@ -36,9 +36,11 @@ class PageController extends ResourceController
     protected function widgetServiceFields()
     {
         return [
+            'rota',
             'nome',
-            'titulo',
-            'descricao',
+            'h1',
+            'h2',
+            'view',
             'conteudo',
         ];
     }
