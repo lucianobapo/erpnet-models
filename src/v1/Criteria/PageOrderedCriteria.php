@@ -21,9 +21,7 @@ class PageOrderedCriteria implements CriteriaInterface
      */
     public function apply($model, RepositoryInterface $repository)
     {
-        $model->orderBy('ordem');
-
-        return $model;
+        return $model->orderBy('ordem');
     }
 
     public function __construct(array $config = [])

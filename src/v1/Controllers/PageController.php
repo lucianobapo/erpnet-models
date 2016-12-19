@@ -27,7 +27,7 @@ class PageController extends ResourceController
      * @var array
      */
     protected $defaultCriterias = [
-        PageOrderedCriteria::class,
+//        PageOrderedCriteria::class,
     ];
 
     /**

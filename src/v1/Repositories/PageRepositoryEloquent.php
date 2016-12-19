@@ -2,6 +2,7 @@
 
 namespace ErpNET\Models\v1\Repositories;
 
+use ErpNET\Models\v1\Criteria\PageOrderedCriteria;
 use Prettus\Repository\Contracts\CacheableInterface;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
@@ -53,6 +54,7 @@ class PageRepositoryEloquent extends BaseRepository implements PageRepository//,
     public function boot()
     {
         $this->pushCriteria(app(RequestCriteria::class));
+        $this->pushCriteria(app(PageOrderedCriteria::class));
     }
 
     /**
