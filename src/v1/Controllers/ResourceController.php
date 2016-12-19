@@ -94,7 +94,7 @@ abstract class ResourceController extends BaseController
         }
 
         //Render welcome if view with route's name not available
-        return $this->viewRender('index', $allData, $render);
+        return $this->render('index', $allData, null, $render);
     }
 
     /**
@@ -117,8 +117,13 @@ abstract class ResourceController extends BaseController
             ]);
         }
 
+        $formConfig = [
+            'method' => 'PUT',
+            'files' => true,
+            'route' => [$this->routeName.'.update', $foundData],
+        ];
         //Render welcome if view with route's name not available
-        return $this->viewRender('show', $allData, $render, $foundData, 'PUT');
+        return $this->render('show', $allData, $foundData, $render, $formConfig);
     }
 
     /**
@@ -362,7 +367,8 @@ abstract class ResourceController extends BaseController
                     'dataModelInstance' => $this->repository->model(),
                     'routePrefix' => $this->routeName,
                     'fields' => $this->widgetServiceFields(),
-                    'showToAdmin' => (\Auth::check() && is_callable([\Auth::user(), 'isAdmin']) && \Auth::user()->isAdmin()),
+                    'showToAdmin' => (config('erpnetWidgetResource.showToAdmin') ||
+                        (\Auth::check() && is_callable([\Auth::user(), 'isAdmin']) && \Auth::user()->isAdmin()) ),
                     'render' => $render,
                     'customFormAttr' => $formConfig,
                 ]
