@@ -2,8 +2,12 @@
 
 namespace ErpNET\Models\v1\Entities;
 
+use ErpNET\Models\v1\Contracts\MandanteTrait;
+
 class PageEloquent extends BaseEloquent
 {
+
+    use MandanteTrait;
 
     protected $table = 'pages';
 
