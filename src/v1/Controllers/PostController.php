@@ -2,6 +2,7 @@
 
 namespace ErpNET\Models\v1\Controllers;
 
+use ErpNET\FileManager\FileManager;
 use ErpNET\Models\v1\Entities\PostEloquent;
 use ErpNET\Models\v1\Interfaces\PostRepository;
 use ErpNET\Models\v1\Interfaces\UserRepository;
@@ -138,6 +139,24 @@ class PostController extends ResourceController
         //Render welcome if view with route's name not available
         return $this->render('show', $allData, $foundData);
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param $post
+     * @param string | null $file
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     *
+     */
+    public function showFile($post, $providerId, $file, FileManager $fileManager){
+        $foundUser = app(UserRepository::class)->findByField('provider_id', $providerId)->first();
+        $foundData = $this->repository->find($post);
+        $params = array_merge($foundData->toArray(), ['name' => $foundUser->name,]);
+        $imgResource = $fileManager->resourceImgSocialProfileWithBg($file, $foundUser->provider_id, $params, 'jokes');
+
+        return $imgResource->response();
+    }
+
     /**
      * Display the specified resource.
      *
@@ -169,6 +188,7 @@ class PostController extends ResourceController
             'method' => 'PUT',
             'files' => true,
             'foundUser' => $foundUser,
+            'providerId' => $providerId,
             'route' => [$this->routeName.'.update', $foundData],
         ];
         //Render welcome if view with route's name not available
