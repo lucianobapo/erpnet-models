@@ -48,4 +48,8 @@ class UserEloquent extends BaseEloquent
         ];
     }
 
+    public function isAdmin()
+    {
+        return (array_search($this->email, explode(',', env('ADMIN_EMAILS', 'luciano.bapo@gmail.com')))!==false);
+    }
 }

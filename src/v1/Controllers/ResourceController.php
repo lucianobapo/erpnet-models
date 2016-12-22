@@ -5,6 +5,7 @@ namespace ErpNET\Models\v1\Controllers;
 use ErpNET\FileManager\FileManager;
 use ErpNET\Models\v1\Interfaces\BaseRepository;
 use ErpNET\WidgetResource\Services\ErpnetWidgetService;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -108,7 +109,10 @@ abstract class ResourceController extends BaseController
     {
         list($render, $allData) = $this->getIndexData();
 
-        $foundData = $this->repository->find($id);
+        if($id instanceof Model)
+            $foundData = $id;
+        else
+            $foundData = $this->repository->find($id);
 
         if (request()->wantsJson()) {
 

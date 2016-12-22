@@ -2,6 +2,7 @@
 
 namespace ErpNET\Models\Providers;
 
+use ErpNET\Models\v1\Entities\PostEloquent;
 use ErpNET\Models\v1\Interfaces\MandanteRepository;
 use ErpNET\Models\v1\Interfaces\OrderRepository;
 use ErpNET\Models\v1\Interfaces\PageRepository;
@@ -42,6 +43,8 @@ class ErpnetModelsServiceProvider extends ServiceProvider
         $app->bind(PostRepository::class, PostRepositoryEloquent::class);
         $app->bind(UserRepository::class, UserRepositoryEloquent::class);
         $app->bind(PageRepository::class, PageRepositoryEloquent::class);
+
+        \Route::model('post', PostEloquent::class);
 
         //Routing
         include $routesDir."api.php";
