@@ -141,7 +141,10 @@ abstract class ResourceController extends BaseController
     {
         list($render, $allData) = $this->getIndexData();
 
-        $foundData = $this->repository->find($id);
+        if($id instanceof Model)
+            $foundData = $id;
+        else
+            $foundData = $this->repository->find($id);
 
         $formConfig = [
             'method' => 'PUT',
