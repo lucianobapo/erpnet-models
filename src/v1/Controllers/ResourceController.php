@@ -165,7 +165,10 @@ abstract class ResourceController extends BaseController
      */
     public function destroy($id)
     {
-        $deleted = $this->repository->delete($id);
+        if($id instanceof Model)
+            $deleted = $this->repository->delete($id->id);
+        else
+            $deleted = $this->repository->delete($id);
 
         if (request()->wantsJson()) {
 
@@ -198,7 +201,6 @@ abstract class ResourceController extends BaseController
                     $fields[$key] = $this->fileManager->saveFile(request()->file($key), 'jokes');
                 }
             }
-
 
             $createdData = $this->repository->create($fields);
 
@@ -249,7 +251,10 @@ abstract class ResourceController extends BaseController
                 }
             }
 
-            $updatedData = $this->repository->update($fields, $id);
+            if($id instanceof Model)
+                $updatedData = $this->repository->update($fields, $id->id);
+            else
+                $updatedData = $this->repository->update($fields, $id);
 
             $response = [
                 'message' => 'Resource updated.',
