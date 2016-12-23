@@ -212,7 +212,7 @@ abstract class ResourceController extends BaseController
                 return response()->json($response);
             }
 
-            return redirect()->back()->with('message', $response['message']);
+            return redirect(route($this->routeName.'.index'))->with('message', $response['message']);
 
         } catch (ValidatorException $e) {
             if (request()->wantsJson()) {
@@ -261,7 +261,7 @@ abstract class ResourceController extends BaseController
                 return response()->json($response);
             }
 
-            return redirect()->back()->with('message', $response['message']);
+            return redirect(route($this->routeName.'.index'))->with('message', $response['message']);
 
         } catch (ValidatorException $e) {
 
