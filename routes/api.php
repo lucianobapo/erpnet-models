@@ -28,20 +28,20 @@ $routeConfigV1 = [
 $router
     ->version('v1', function (Router $router) use ($routeConfigV1) {
         $router
-            ->group($routeConfigV1, function (Router $router) {
+            ->group($routeConfigV1, function (Router $router) use ($routeConfigV1) {
                 $router->get('appVersion', [
                     'as'=>'api.appVersion',
                     'uses'=> 'ApiController@appVersion'
                 ]);
 
-                $router->resource('mandante', 'MandanteController');
-                $router->resource('order', 'OrderController');
-                $router->resource('partner', 'PartnerController');
-                $router->resource('post', 'PostController');
-                $router->resource('user', 'UserController');
-                $router->resource('page', 'PageController');
-
-                $router->get('/post/{post}/edit', ['as'=>'post.edit', 'uses'=>'PostController@edit']);
+                foreach (config('erpnetMigrates.tables') as $table => $config) {
+                    $routePrefix = isset($config['routePrefix'])?$config['routePrefix']:str_singular($table);
+                    $routeController = isset($config['routeController'])?$config['routeController']:(ucfirst($routePrefix).'Controller');
+                    if(class_exists($routeConfigV1['namespace'].'\\'.$routeController)){
+                        $router->resource($routePrefix, $routeController);
+                        $router->get("/$routePrefix/{$routePrefix}/edit", ['as'=>$routePrefix.'.edit', 'uses'=>$routeController.'@edit']);
+                    }
+                }
             });
     });
 
