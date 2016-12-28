@@ -2,8 +2,6 @@
 
 namespace ErpNET\Models\v1\Entities;
 
-use ErpNET\FileManager\FileManager;
-
 class PostEloquent extends BaseEloquent
 {
 

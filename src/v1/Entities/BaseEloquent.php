@@ -18,12 +18,6 @@ abstract class BaseEloquent extends Model
     use SoftDeletes;
 
     /**
-     * Implement fields to be exposed
-     * @return array
-     */
-    abstract public function exposedFields();
-
-    /**
      * Create a new Eloquent model instance.
      *
      * @param  array $attributes
