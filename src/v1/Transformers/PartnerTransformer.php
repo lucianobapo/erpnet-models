@@ -20,6 +20,6 @@ class PartnerTransformer extends TransformerAbstract
      */
     public function transform(PartnerEloquent $model)
     {
-        return $model->exposedFields();
+        return $model->transformPresenter();
     }
 }

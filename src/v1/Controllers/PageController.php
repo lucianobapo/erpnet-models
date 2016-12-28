@@ -30,20 +30,4 @@ class PageController extends ResourceController
 //        PageOrderedCriteria::class,
     ];
 
-    /**
-     * ErpnetWidgetService fields configuration
-     * @return array
-     */
-    protected function widgetServiceFields()
-    {
-        return [
-            'ordem',
-            'rota',
-            'nome',
-            'h1',
-            'h2',
-            'view',
-            'conteudo',
-        ];
-    }
 }

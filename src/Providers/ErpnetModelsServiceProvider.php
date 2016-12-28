@@ -2,20 +2,6 @@
 
 namespace ErpNET\Models\Providers;
 
-use ErpNET\Models\v1\Entities\PostEloquent;
-use ErpNET\Models\v1\Interfaces\MandanteRepository;
-use ErpNET\Models\v1\Interfaces\OrderRepository;
-use ErpNET\Models\v1\Interfaces\PageRepository;
-use ErpNET\Models\v1\Interfaces\PartnerRepository;
-use ErpNET\Models\v1\Interfaces\PostRepository;
-use ErpNET\Models\v1\Interfaces\UserRepository;
-use ErpNET\Models\v1\Repositories\MandanteRepositoryEloquent;
-use ErpNET\Models\v1\Repositories\OrderRepositoryEloquent;
-use ErpNET\Models\v1\Repositories\PageRepositoryEloquent;
-use ErpNET\Models\v1\Repositories\PartnerRepositoryEloquent;
-use ErpNET\Models\v1\Repositories\PostRepositoryEloquent;
-use ErpNET\Models\v1\Repositories\UserRepositoryEloquent;
-use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 
 class ErpnetModelsServiceProvider extends ServiceProvider
@@ -37,14 +23,15 @@ class ErpnetModelsServiceProvider extends ServiceProvider
 //        $this->publishes([$configPath => $this->getConfigPath()], 'config');
 
         //Bind Interfaces
-        $app->bind(PartnerRepository::class, PartnerRepositoryEloquent::class);
-        $app->bind(OrderRepository::class, OrderRepositoryEloquent::class);
-        $app->bind(MandanteRepository::class, MandanteRepositoryEloquent::class);
-        $app->bind(PostRepository::class, PostRepositoryEloquent::class);
-        $app->bind(UserRepository::class, UserRepositoryEloquent::class);
-        $app->bind(PageRepository::class, PageRepositoryEloquent::class);
+        foreach (config('erpnetMigrates.tables') as $table => $config) {
+            $routePrefix = isset($config['routePrefix'])?$config['routePrefix']:str_singular($table);
+            $bindInterface = '\\ErpNET\\Models\\v1\\Interfaces\\'.(isset($config['bindInterface'])?$config['bindInterface']:(ucfirst($routePrefix).'Repository'));
+            $bindRepository = '\\ErpNET\\Models\\v1\\Repositories\\'.(isset($config['bindRepository'])?$config['bindRepository']:(ucfirst($routePrefix).'RepositoryEloquent'));
 
-        \Route::model('post', PostEloquent::class);
+            if(interface_exists($bindInterface)  && class_exists($bindRepository)){
+                $app->bind($bindInterface, $bindRepository);
+            }
+        }
 
         //Routing
         include $routesDir."api.php";

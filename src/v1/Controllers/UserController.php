@@ -27,17 +27,4 @@ class UserController extends ResourceController
      */
     protected $defaultCriterias = [];
 
-    /**
-     * ErpnetWidgetService fields configuration
-     * @return array
-     */
-    protected function widgetServiceFields()
-    {
-        return [
-            'mandante',
-            'name',
-            'provider',
-            'provider_id',
-        ];
-    }
 }

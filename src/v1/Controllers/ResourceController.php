@@ -50,12 +50,6 @@ abstract class ResourceController extends BaseController
     protected $defaultCriterias = [];
 
     /**
-     * ErpnetWidgetService fields configuration
-     * @return array
-     */
-    abstract protected function widgetServiceFields();
-
-    /**
      * Controller constructor.
      */
     public function __construct()
@@ -401,5 +395,14 @@ abstract class ResourceController extends BaseController
             return link_to(env('S3_URL').env('S3_BUCKET').DIRECTORY_SEPARATOR.'jokes'.DIRECTORY_SEPARATOR.$item[$field], $item[$field], ['target'=>'_blank', 'title'=>$item[$field]]);
         else
             return $item[$field];
+    }
+
+    /**
+     * @return array|mixed
+     */
+    protected function widgetServiceFields()
+    {
+        $config = config("erpnetMigrates.tables.".str_plural($this->routeName).".fields");
+        return is_array($config)?$config:[];
     }
 }

@@ -20,7 +20,7 @@ class OrderTransformer extends TransformerAbstract
      */
     public function transform(OrderEloquent $model)
     {
-        return $model->exposedFields();
+        return $model->transformPresenter();
 //        return [
 //            'id'         => (int) $model->id,
 //

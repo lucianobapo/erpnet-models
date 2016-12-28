@@ -3,33 +3,12 @@
 namespace ErpNET\Models\v1\Controllers;
 
 use ErpNET\Models\v1\Interfaces\PartnerRepository;
+use ErpNET\Models\v1\Validators\PartnerValidator;
 
 class PartnerController extends ResourceController
 {
-    /**
-     * Abstract to set and return route name
-     * @return string
-     */
-    protected function routeName()
-    {
-        return 'partners';
-    }
+    protected $routeName = 'partner';
+    protected $repositoryClass = PartnerRepository::class;
+    protected $validatorClass = PartnerValidator::class;
 
-    /**
-     * Abstract to set and return repository class
-     * @return string
-     */
-    protected function repositoryClass()
-    {
-        return PartnerRepository::class;
-    }
-
-    /**
-     * ErpnetWidgetService fields configuration
-     * @return array
-     */
-    protected function widgetServiceFields()
-    {
-        return ['nome'];
-    }
 }

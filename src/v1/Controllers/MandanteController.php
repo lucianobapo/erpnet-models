@@ -22,12 +22,4 @@ class MandanteController extends ResourceController
      */
     protected $defaultCriterias = [];
 
-    /**
-     * ErpnetWidgetService fields configuration
-     * @return array
-     */
-    protected function widgetServiceFields()
-    {
-        return ['mandante'];
-    }
 }

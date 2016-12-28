@@ -28,14 +28,4 @@ class PostController extends ResourceController
     protected $defaultCriterias = [
 //        Criteria::class,
     ];
-
-    /**
-     * ErpnetWidgetService fields configuration
-     * @return array
-     */
-    protected function widgetServiceFields()
-    {
-        return ['id'];
-    }
-
 }

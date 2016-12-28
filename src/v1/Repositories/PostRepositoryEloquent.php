@@ -2,22 +2,19 @@
 
 namespace ErpNET\Models\v1\Repositories;
 
-use Prettus\Repository\Contracts\CacheableInterface;
-use Prettus\Repository\Eloquent\BaseRepository;
-use Prettus\Repository\Criteria\RequestCriteria;
 use ErpNET\Models\v1\Interfaces\PostRepository;
 use ErpNET\Models\v1\Entities\PostEloquent;
 use ErpNET\Models\v1\Validators\PostValidator;
-use Prettus\Repository\Presenter\ModelFractalPresenter;
-use Prettus\Repository\Traits\CacheableRepository;
 
 /**
  * Class PostRepositoryEloquent
  * @package namespace ErpNET\Models\v1\Repositories;
  */
-class PostRepositoryEloquent extends BaseRepository implements PostRepository//, CacheableInterface
+class PostRepositoryEloquent extends BaseRepositoryEloquent implements PostRepository
 {
-//    use CacheableRepository;
+    protected $modelClass = PostEloquent::class;
+    protected $validatorClass = PostValidator::class;
+//    protected $presenterClass = PostPresenter::class;
 
     protected $fieldSearchable = [
 //        'product.name',
@@ -25,42 +22,4 @@ class PostRepositoryEloquent extends BaseRepository implements PostRepository//,
 //        'email', // Default Condition "="
 //        'your_field'=>'condition'
     ];
-
-    /**
-     * Specify Model class name
-     *
-     * @return string
-     */
-    public function model()
-    {
-        return PostEloquent::class;
-    }
-
-    /**
-    * Specify Validator class name
-    *
-    * @return mixed
-    */
-    public function validator()
-    {
-        return PostValidator::class;
-    }
-
-
-    /**
-     * Boot up the repository, pushing criteria
-     */
-    public function boot()
-    {
-        $this->pushCriteria(app(RequestCriteria::class));
-    }
-
-    /**
-     * @return string
-     */
-    public function presenter()
-    {
-        //return ModelFractalPresenter::class
-//        return OrderPresenter::class;
-    }
 }
