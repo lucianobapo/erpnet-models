@@ -5,6 +5,7 @@ namespace ErpNET\Models\v1\Controllers;
 use ErpNET\Models\v1\Criteria\OpenOrdersCriteria;
 use ErpNET\Models\v1\Entities\OrderEloquent;
 use ErpNET\Models\v1\Interfaces\OrderRepository;
+use ErpNET\Models\v1\Repositories\SharedStatRepositoryEloquent;
 use ErpNET\Models\v1\Validators\OrderValidator;
 use Illuminate\Database\Eloquent\Model;
 use Prettus\Validator\Exceptions\ValidatorException;
@@ -36,18 +37,6 @@ class OrderController extends ResourceController
     public function finish($order)
     {
         try {
-//            $fields = request()->all();
-
-//            $this->validator->with($fields)->passesOrFail(ValidatorInterface::RULE_UPDATE);
-
-//            if ($this->fileManager instanceof FileManager){
-//                $files = request()->allFiles();
-//
-//                foreach ($files as $key => $value) {
-//                    $fields[$key] = $this->fileManager->saveFile(request()->file($key), 'jokes');
-//                }
-//            }
-
             if($order instanceof Model)
                 $foundData = $this->repository->find($order->id);
             else
@@ -81,9 +70,18 @@ class OrderController extends ResourceController
         }
     }
 
-    public function changeToFinishStatus(OrderEloquent $foundData)
+    public function changeToFinishStatus(OrderEloquent $data)
     {
-        dd($foundData->orderSharedStats());
-        $foundData->orderSharedStats()->sync();
+        $finaliza = true;
+        foreach($data->orderSharedStats as $sharedStat){
+            if ($sharedStat->status=='aberto') $data->orderSharedStats()->detach($sharedStat->id);
+            if ($sharedStat->status=='finalizado') $finaliza = false;
+        }
+
+        if ($finaliza) {
+            $sharedStatRepository = app(SharedStatRepositoryEloquent::class) ;
+            $finishId = $sharedStatRepository->findWhere(["status" => "finalizado"]);
+            $data->orderSharedStats()->attach($finishId);
+        }
     }
 }
