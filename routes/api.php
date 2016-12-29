@@ -43,10 +43,8 @@ $router
                     }
                 }
 
-                $router->get('/order/{order}/finish', [
-                    'as'=>'order.finish',
-                    'uses'=> 'OrderController@finish'
-                ]);
+                $router->delete('/order/{order}/finish', ['as'=>'order.finish','uses'=> 'OrderController@finish']);
+                $router->delete('/order/{order}/cancel', ['as'=>'order.cancel','uses'=> 'OrderController@cancel']);
             });
     });
 

@@ -70,17 +70,70 @@ class OrderController extends ResourceController
         }
     }
 
+    public function cancel($order)
+    {
+        try {
+            if($order instanceof Model)
+                $foundData = $this->repository->find($order->id);
+            else
+                $foundData = $this->repository->find($order);
+
+            $this->changeToCancelStatus($foundData);
+
+            $response = [
+                'message' => 'Resource updated.',
+                'data'    => $foundData->toArray(),
+            ];
+
+            if (request()->wantsJson()) {
+
+                return response()->json($response);
+            }
+
+            return redirect(route($this->routeName.'.index'))->with('message', $response['message']);
+
+        } catch (ValidatorException $e) {
+
+            if (request()->wantsJson()) {
+
+                return response()->json([
+                    'error'   => true,
+                    'message' => $e->getMessageBag()
+                ]);
+            }
+
+            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
+        }
+    }
+
     public function changeToFinishStatus(OrderEloquent $data)
     {
         $finaliza = true;
         foreach($data->orderSharedStats as $sharedStat){
-            if ($sharedStat->status=='aberto') $data->orderSharedStats()->detach($sharedStat->id);
-            if ($sharedStat->status=='finalizado') $finaliza = false;
+            if ($sharedStat->status==config('erpnetModels.openStatusName')) $data->orderSharedStats()->detach($sharedStat->id);
+            if ($sharedStat->status==config('erpnetModels.cancelStatusName')) $data->orderSharedStats()->detach($sharedStat->id);
+            if ($sharedStat->status==config('erpnetModels.finishStatusName')) $finaliza = false;
         }
 
         if ($finaliza) {
             $sharedStatRepository = app(SharedStatRepository::class) ;
             $finishId = $sharedStatRepository->findWhere(["status" => config('erpnetModels.finishStatusName')]);
+            $data->orderSharedStats()->attach($finishId);
+        }
+    }
+
+    public function changeToCancelStatus(OrderEloquent $data)
+    {
+        $cancela = true;
+        foreach($data->orderSharedStats as $sharedStat){
+            if ($sharedStat->status==config('erpnetModels.openStatusName')) $data->orderSharedStats()->detach($sharedStat->id);
+            if ($sharedStat->status==config('erpnetModels.finishStatusName')) $data->orderSharedStats()->detach($sharedStat->id);;
+            if ($sharedStat->status==config('erpnetModels.cancelStatusName')) $cancela = false;
+        }
+
+        if ($cancela) {
+            $sharedStatRepository = app(SharedStatRepository::class) ;
+            $finishId = $sharedStatRepository->findWhere(["status" => config('erpnetModels.cancelStatusName')]);
             $data->orderSharedStats()->attach($finishId);
         }
     }
