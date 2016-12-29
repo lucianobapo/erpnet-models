@@ -3,8 +3,11 @@
 namespace ErpNET\Models\v1\Controllers;
 
 use ErpNET\Models\v1\Criteria\OpenOrdersCriteria;
+use ErpNET\Models\v1\Entities\OrderEloquent;
 use ErpNET\Models\v1\Interfaces\OrderRepository;
 use ErpNET\Models\v1\Validators\OrderValidator;
+use Illuminate\Database\Eloquent\Model;
+use Prettus\Validator\Exceptions\ValidatorException;
 
 /**
  * Mandante resource representation.
@@ -29,4 +32,58 @@ class OrderController extends ResourceController
     protected $defaultCriterias = [
         OpenOrdersCriteria::class,
     ];
+
+    public function finish($order)
+    {
+        try {
+//            $fields = request()->all();
+
+//            $this->validator->with($fields)->passesOrFail(ValidatorInterface::RULE_UPDATE);
+
+//            if ($this->fileManager instanceof FileManager){
+//                $files = request()->allFiles();
+//
+//                foreach ($files as $key => $value) {
+//                    $fields[$key] = $this->fileManager->saveFile(request()->file($key), 'jokes');
+//                }
+//            }
+
+            if($order instanceof Model)
+                $foundData = $this->repository->find($order->id);
+            else
+                $foundData = $this->repository->find($order);
+
+            $this->changeToFinishStatus($foundData);
+
+            $response = [
+                'message' => 'Resource updated.',
+                'data'    => $foundData->toArray(),
+            ];
+
+            if (request()->wantsJson()) {
+
+                return response()->json($response);
+            }
+
+            return redirect(route($this->routeName.'.index'))->with('message', $response['message']);
+
+        } catch (ValidatorException $e) {
+
+            if (request()->wantsJson()) {
+
+                return response()->json([
+                    'error'   => true,
+                    'message' => $e->getMessageBag()
+                ]);
+            }
+
+            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
+        }
+    }
+
+    public function changeToFinishStatus(OrderEloquent $foundData)
+    {
+        dd($foundData->orderSharedStats());
+        $foundData->orderSharedStats()->sync();
+    }
 }

@@ -39,9 +39,14 @@ $router
                     $routeController = isset($config['routeController'])?$config['routeController']:(ucfirst($routePrefix).'Controller');
                     if(class_exists($routeConfigV1['namespace'].'\\'.$routeController)){
                         $router->resource($routePrefix, $routeController);
-                        $router->get("/$routePrefix/{$routePrefix}/edit", ['as'=>$routePrefix.'.edit', 'uses'=>$routeController.'@edit']);
+                        $router->get('/'.$routePrefix.'/{'.$routePrefix.'}/edit', ['as'=>$routePrefix.'.edit', 'uses'=>$routeController.'@edit']);
                     }
                 }
+
+                $router->get('/order/{order}/finish', [
+                    'as'=>'order.finish',
+                    'uses'=> 'OrderController@finish'
+                ]);
             });
     });
 
