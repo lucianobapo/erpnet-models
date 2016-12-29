@@ -5,6 +5,7 @@ namespace ErpNET\Models\v1\Controllers;
 use ErpNET\Models\v1\Criteria\OpenOrdersCriteria;
 use ErpNET\Models\v1\Entities\OrderEloquent;
 use ErpNET\Models\v1\Interfaces\OrderRepository;
+use ErpNET\Models\v1\Interfaces\SharedStatRepository;
 use ErpNET\Models\v1\Validators\OrderValidator;
 use Illuminate\Database\Eloquent\Model;
 use Prettus\Validator\Exceptions\ValidatorException;
@@ -79,7 +80,7 @@ class OrderController extends ResourceController
 
         if ($finaliza) {
             $sharedStatRepository = app(SharedStatRepository::class) ;
-            $finishId = $sharedStatRepository->findWhere(["status" => "finalizado"]);
+            $finishId = $sharedStatRepository->findWhere(["status" => config('erpnetModels.finishStatusName')]);
             $data->orderSharedStats()->attach($finishId);
         }
     }

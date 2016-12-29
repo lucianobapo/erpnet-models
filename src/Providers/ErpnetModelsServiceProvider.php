@@ -13,14 +13,18 @@ class ErpnetModelsServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $app = $this->app;
+
         $projectRootDir = __DIR__.DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR;
         $routesDir = $projectRootDir."routes".DIRECTORY_SEPARATOR;
 
-        $app = $this->app;
+        $configPath = $projectRootDir . 'config/erpnetModels.php';
+        $this->mergeConfigFrom($configPath, 'erpnetModels');
 
         //Publish Config
-//        $configPath = __DIR__ . '/../config/debugbar.php';
-//        $this->publishes([$configPath => $this->getConfigPath()], 'config');
+        $this->publishes([
+            $projectRootDir.'config/erpnetModels.php' => config_path('erpnetModels.php')
+        ], 'config');
 
         //Bind Interfaces
         foreach (config('erpnetMigrates.tables') as $table => $config) {
