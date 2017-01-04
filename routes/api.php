@@ -45,6 +45,8 @@ $router
 
                 $router->delete('/order/{order}/finish', ['as'=>'order.finish','uses'=> 'OrderController@finish']);
                 $router->delete('/order/{order}/cancel', ['as'=>'order.cancel','uses'=> 'OrderController@cancel']);
+                
+                $router->get('/delivery-service', ['as'=>'delivery.package','uses'=> 'DeliveryServiceController@package']);
             });
     });
 
