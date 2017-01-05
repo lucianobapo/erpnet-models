@@ -14,7 +14,7 @@ class ProductTransformer extends TransformerAbstract
 
     /**
      * Transform the PartnerEloquent entity
-     * @param PartnerEloquent $model
+     * @param ProductEloquent $model
      *
      * @return array
      */
