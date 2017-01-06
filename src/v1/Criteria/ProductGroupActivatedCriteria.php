@@ -22,7 +22,7 @@ class ProductGroupActivatedCriteria implements CriteriaInterface
     public function apply($model, RepositoryInterface $repository)
     {
         $model = $model
-//            ->select('product_groups.*')
+            ->select('product_groups.*')
             ->join('product_group_shared_stat', 'product_groups.id', '=', 'product_group_shared_stat.product_group_id')
             ->join('shared_stats', 'product_group_shared_stat.shared_stat_id', '=', 'shared_stats.id')
             ->where('shared_stats.status', '=', config('erpnetModels.activeStatusName'))

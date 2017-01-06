@@ -24,7 +24,7 @@ class ProductGroupCategoriesCriteria implements CriteriaInterface
         $model = $model
             ->select('product_groups.*')
             ->where('product_groups.grupo', 'LIKE', '%Categoria:%')
-            ->orderBy('grupo', 'desc')
+            ->orderBy('grupo', 'asc')
         ;
 
         return $model;
