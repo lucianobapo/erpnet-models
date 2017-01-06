@@ -6,7 +6,7 @@ use ErpNET\Models\v1\Interfaces\SharedStatRepository;
 
 class SharedStatController extends ResourceController
 {
-    protected $routeName = 'shared-stat';
+    protected $routeName = 'shared_stat';
     protected $repositoryClass = SharedStatRepository::class;
 
 }

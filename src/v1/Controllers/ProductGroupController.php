@@ -6,7 +6,7 @@ use ErpNET\Models\v1\Interfaces\ProductGroupRepository;
 
 class ProductGroupController extends ResourceController
 {
-    protected $routeName = 'product-group';
+    protected $routeName = 'product_group';
     protected $repositoryClass = ProductGroupRepository::class;
 
 }
