@@ -36,7 +36,7 @@ $router
 
                 foreach (config('erpnetMigrates.tables') as $table => $config) {
                     $routePrefix = isset($config['routePrefix'])?$config['routePrefix']:str_singular($table);
-                    $routeController = isset($config['routeController'])?$config['routeController']:(ucfirst($routePrefix).'Controller');
+                    $routeController = isset($config['routeController'])?$config['routeController']:(ucfirst(camel_case($routePrefix)).'Controller');
                     if(class_exists($routeConfigV1['namespace'].'\\'.$routeController)){
                         $router->resource($routePrefix, $routeController);
                         $router->get('/'.$routePrefix.'/{'.$routePrefix.'}/edit', ['as'=>$routePrefix.'.edit', 'uses'=>$routeController.'@edit']);
