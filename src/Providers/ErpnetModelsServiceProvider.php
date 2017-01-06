@@ -38,6 +38,8 @@ class ErpnetModelsServiceProvider extends ServiceProvider
         }
         $app->bind(\ErpNET\Models\v1\Interfaces\ProductRepository::class,
             \ErpNET\Models\v1\Repositories\ProductRepositoryEloquent::class);
+        $app->bind(\ErpNET\Models\v1\Interfaces\SharedStatRepository::class,
+            \ErpNET\Models\v1\Repositories\SharedStatRepositoryEloquent::class);
 
         //Routing
         include $routesDir."api.php";
