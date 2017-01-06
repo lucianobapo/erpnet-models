@@ -3,6 +3,7 @@
 namespace ErpNET\Models\v1\Controllers;
 
 use ErpNET\Models\v1\Criteria\ProductGroupCategoriesCriteria;
+use ErpNET\Models\v1\Criteria\ProductGroupActivatedCriteria;
 use ErpNET\Models\v1\Interfaces\ProductGroupRepository;
 
 class ProductGroupController extends ResourceController
@@ -16,5 +17,6 @@ class ProductGroupController extends ResourceController
      */
     protected $defaultCriterias = [
         ProductGroupCategoriesCriteria::class,
+        ProductGroupActivatedCriteria::class,
     ];
 }
