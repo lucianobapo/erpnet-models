@@ -50,6 +50,7 @@ class ErpnetModelsServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->register(\Barryvdh\Cors\ServiceProvider::class);
         $this->app->register(\Dingo\Api\Provider\LaravelServiceProvider::class);
     }
 

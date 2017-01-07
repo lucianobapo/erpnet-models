@@ -12,6 +12,7 @@
     "php": "^5.5.9 || ^7.0",
     "ilhanet/erpnet-file-manager": "dev-master",
     "dingo/api": "1.0.x@dev",
+    "barryvdh/laravel-cors": "^0.8.2",
     "prettus/l5-repository": "^2.6"
   },
   "require-dev": {
