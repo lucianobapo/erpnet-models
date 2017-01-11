@@ -13,6 +13,11 @@
 
 use Illuminate\Routing\Router;
 
+if (config('app.env')=='local')
+    Route::get('/phpinfo', function () {
+        return phpinfo();
+    });
+
 //Route::get('/', function () {
 //    return view('welcome');
 //});
