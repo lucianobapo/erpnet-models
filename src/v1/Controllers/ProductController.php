@@ -12,7 +12,7 @@ class ProductController extends ResourceController
     protected $repositoryClass = ProductRepository::class;
 //    protected $validatorClass = ProductValidator::class;
 
-    protected $paginateItemCount = 5;
+    protected $paginateItemCount = 0;
 
     /**
      * Criterias to load
