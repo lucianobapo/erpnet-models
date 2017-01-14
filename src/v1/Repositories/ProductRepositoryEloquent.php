@@ -16,7 +16,8 @@ class ProductRepositoryEloquent extends BaseRepositoryEloquent implements Produc
     protected $presenterClass = ProductPresenter::class;
 
     protected $fieldSearchable = [
-        'productProductGroups.id',
+        'productProductGroups.product_group_id',
+//        'productSharedStats.shared_stat_id',
 //        'image'
 //        'name'=>'like',
 //        'email', // Default Condition "="
