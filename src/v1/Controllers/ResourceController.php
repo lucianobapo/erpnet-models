@@ -186,7 +186,8 @@ abstract class ResourceController extends BaseController
 
             $fields = request()->all();
 
-            $this->validator->with($fields)->passesOrFail(ValidatorInterface::RULE_CREATE);
+            if ($this->validator instanceof LaravelValidator)
+                $this->validator->with($fields)->passesOrFail(ValidatorInterface::RULE_CREATE);
 
             if ($this->fileManager instanceof FileManager){
                 $files = request()->allFiles();
@@ -235,7 +236,8 @@ abstract class ResourceController extends BaseController
         try {
             $fields = request()->all();
 
-            $this->validator->with($fields)->passesOrFail(ValidatorInterface::RULE_UPDATE);
+            if ($this->validator instanceof LaravelValidator)
+                $this->validator->with($fields)->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
             if ($this->fileManager instanceof FileManager){
                 $files = request()->allFiles();
@@ -286,17 +288,22 @@ abstract class ResourceController extends BaseController
                 $this->repository->pushCriteria(app($defaultCriteria));
         }
 
-        $paginate = $this->repository->paginate($this->paginateItemCount>0?$this->paginateItemCount:null);
+        if($this->paginateItemCount===-1)
+            $data = $this->repository;
+        else
+            $data = $this->repository->paginate($this->paginateItemCount>0?$this->paginateItemCount:null);
 
-        if (is_object($paginate)) {
-            $render = $paginate->render();
-            $allData = $paginate->all();
+        if (is_object($data)) {
+            $render = null;
+            if (method_exists($data, 'render') && is_callable([$data, 'render']))
+                $render = $data->render();
+            $allData = $data->all();
             return array($render, $allData);
         }
 
-        if (is_array($paginate)) {
+        if (is_array($data)) {
             $render = null;
-            $allData = $paginate['data'];
+            $allData = $data['data'];
             return array($render, $allData);
         }
 

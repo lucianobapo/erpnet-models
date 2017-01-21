@@ -11,9 +11,16 @@ use Prettus\Repository\Traits\CacheableRepository;
  * Class BaseRepositoryEloquent
  * @package namespace ErpNET\Models\v1\Repositories;
  */
-class BaseRepositoryEloquent extends BaseRepository //implements CacheableInterface
+class BaseRepositoryEloquent extends BaseRepository implements CacheableInterface
 {
-//    use CacheableRepository;
+    // Setting the lifetime of the cache to a repository specifically
+    protected $cacheMinutes = 90;
+
+//    protected $cacheOnly = ['all', ...];
+    //or
+//    protected $cacheExcept = ['find', ...];
+
+    use CacheableRepository;
 
     protected $modelClass;
     protected $validatorClass;
