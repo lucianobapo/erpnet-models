@@ -5,7 +5,7 @@ namespace ErpNET\Models\v1\Controllers;
 use ErpNET\Models\v1\Criteria\OpenOrdersCriteria;
 use ErpNET\Models\v1\Entities\OrderEloquent;
 use ErpNET\Models\v1\Interfaces\OrderRepository;
-use ErpNET\Models\v1\Services\OrderService;
+use ErpNET\Models\v1\Interfaces\OrderService;
 use ErpNET\Models\v1\Interfaces\SharedStatRepository;
 use ErpNET\Models\v1\Validators\OrderValidator;
 use Illuminate\Database\Eloquent\Model;

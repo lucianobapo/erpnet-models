@@ -4,6 +4,7 @@ namespace ErpNET\Models\v1\Controllers;
 
 use ErpNET\FileManager\FileManager;
 use ErpNET\Models\v1\Interfaces\BaseRepository;
+use ErpNET\Models\v1\Interfaces\OrderService;
 use ErpNET\WidgetResource\Services\ErpnetWidgetService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -34,7 +35,7 @@ abstract class ResourceController extends BaseController
      */
     protected $repository;
     /**
-     * @var
+     * @var OrderService
      */
     protected $service;
 
