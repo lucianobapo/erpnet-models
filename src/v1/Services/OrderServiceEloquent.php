@@ -21,7 +21,7 @@ use ErpNET\Delivery\v1\Entities\DeliveryPackageEloquent;
 use ErpNET\Models\v1\Interfaces\ProductGroupRepository;
 use ErpNET\Models\v1\Interfaces\SharedStatRepository;
 
-class OrderService
+class OrderServiceEloquent
 {
 //    protected $productRepository;
 //    protected $productGroupRepository;

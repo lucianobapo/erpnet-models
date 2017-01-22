@@ -35,7 +35,9 @@ class ErpnetModelsServiceProvider extends ServiceProvider
             if(interface_exists($bindInterface)  && class_exists($bindRepository)){
                 $app->bind($bindInterface, $bindRepository);
             }
-        }        
+        }
+
+        $app->bind(\ErpNET\Models\v1\Interfaces\OrderService::class, \ErpNET\Models\v1\Services\OrderServiceEloquent::class);
 
         //Routing
         include $routesDir."api.php";
