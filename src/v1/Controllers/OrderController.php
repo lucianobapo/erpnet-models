@@ -5,6 +5,7 @@ namespace ErpNET\Models\v1\Controllers;
 use ErpNET\Models\v1\Criteria\OpenOrdersCriteria;
 use ErpNET\Models\v1\Entities\OrderEloquent;
 use ErpNET\Models\v1\Interfaces\OrderRepository;
+use ErpNET\Models\v1\Services\OrderService;
 use ErpNET\Models\v1\Interfaces\SharedStatRepository;
 use ErpNET\Models\v1\Validators\OrderValidator;
 use Illuminate\Database\Eloquent\Model;
@@ -19,6 +20,7 @@ class OrderController extends ResourceController
 {
     protected $routeName = 'order';
     protected $repositoryClass = OrderRepository::class;
+    protected $serviceClass = OrderService::class;
     protected $validatorClass = OrderValidator::class;
 
     /**
@@ -74,15 +76,17 @@ class OrderController extends ResourceController
     {
         try {
             if($order instanceof Model)
-                $foundData = $this->repository->find($order->id);
+//                $foundData = $this->repository->find($order->id);
+                $updatedData = $this->service->changeToCancelStatus($order->id);
             else
-                $foundData = $this->repository->find($order);
+                $updatedData = $this->service->changeToCancelStatus($order);
+//                $foundData = $this->repository->find($order);
 
-            $this->changeToCancelStatus($foundData);
+//            $this->changeToCancelStatus($foundData);
 
             $response = [
                 'message' => 'Resource updated.',
-                'data'    => $foundData->toArray(),
+                'data'    => $updatedData->toArray(),
             ];
 
             if (request()->wantsJson()) {

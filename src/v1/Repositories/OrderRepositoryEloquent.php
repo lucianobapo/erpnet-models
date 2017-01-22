@@ -24,4 +24,14 @@ class OrderRepositoryEloquent extends BaseRepositoryEloquent implements OrderRep
 //        'your_field'=>'condition'
     ];
 
+    public function orderSharedStatsDetach(OrderEloquent &$order, $sharedStatId)
+    {
+        $order->orderSharedStats()->detach($sharedStatId);
+    }
+    
+    public function orderSharedStatsAttach(OrderEloquent &$order, $sharedStatId)
+    {
+        $order->orderSharedStats()->attach($sharedStatId);
+        
+    }
 }

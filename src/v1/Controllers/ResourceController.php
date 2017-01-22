@@ -33,6 +33,10 @@ abstract class ResourceController extends BaseController
      * @var BaseRepository
      */
     protected $repository;
+    /**
+     * @var
+     */
+    protected $service;
 
     /**
      * @var LaravelValidator
@@ -61,6 +65,9 @@ abstract class ResourceController extends BaseController
 
         if (isset($this->repositoryClass))
             $this->repository = app($this->repositoryClass);
+        
+        if (isset($this->serviceClass))
+            $this->service = app($this->serviceClass);
 
         if (isset($this->validatorClass))
             $this->validator  = app($this->validatorClass);
