@@ -9,6 +9,13 @@ class OrderEloquent extends BaseEloquent
     protected $table = 'orders';
 
     /**
+     * All of the relationships to be touched.
+     *
+     * @var array
+     */
+    protected $touches = ['orderSharedStats', 'orderItems'];
+
+    /**
      * Get the status associated with the given order.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
