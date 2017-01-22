@@ -3,6 +3,7 @@
 namespace ErpNET\Models\v1\Controllers;
 
 use ErpNET\Models\v1\Interfaces\AddressRepository;
+use ErpNET\Models\v1\Validators\AddressValidator;
 
 /**
  *  Address resource representation.
@@ -13,6 +14,7 @@ class AddressController extends ResourceController
 {
     protected $routeName = 'address';
     protected $repositoryClass = AddressRepository::class;
+    protected $validatorClass = AddressValidator::class;
 
     /**
      * @var integer
