@@ -6,6 +6,7 @@ use ErpNET\Models\v1\Entities\OrderEloquent;
 /**
  * Interface OrderRepository
  * @package namespace ErpNET\Models\v1\Interfaces;
+ * @see \ErpNET\Models\v1\Repositories\OrderRepositoryEloquent
  */
 interface OrderRepository extends BaseRepository
 {
