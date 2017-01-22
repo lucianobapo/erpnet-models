@@ -75,4 +75,25 @@ class OrderService
         
         return $orderFound;
     }
+    
+    public function changeToOpenStatus($orderId)
+    {
+        $cancela = true;
+        $orderFound = $this->orderRepository->find($orderId);
+        foreach($orderFound->orderSharedStats as $sharedStat){            
+            if ($sharedStat->status==config('erpnetModels.openStatusName'))
+                $cancela = false;
+            if ($sharedStat->status==config('erpnetModels.finishStatusName'))
+                $this->orderRepository->orderSharedStatsDetach($orderFound, $sharedStat->id);
+            if ($sharedStat->status==config('erpnetModels.cancelStatusName'))
+                $this->orderRepository->orderSharedStatsDetach($orderFound, $sharedStat->id);
+        }
+
+        if ($cancela) {
+            $sharedStatId = $this->sharedStatRepository->findWhere(["status" => config('erpnetModels.openStatusName')]);
+            $this->orderRepository->orderSharedStatsAttach($orderFound, $sharedStatId);
+        }
+        
+        return $orderFound;
+    }
 }
