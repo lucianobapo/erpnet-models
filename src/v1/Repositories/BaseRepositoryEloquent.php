@@ -14,7 +14,7 @@ use Prettus\Repository\Traits\CacheableRepository;
 class BaseRepositoryEloquent extends BaseRepository implements CacheableInterface
 {
     // Setting the lifetime of the cache to a repository specifically
-    protected $cacheMinutes = 90;
+    protected $cacheMinutes = 360;
 
 //    protected $cacheOnly = ['all', ...];
     //or

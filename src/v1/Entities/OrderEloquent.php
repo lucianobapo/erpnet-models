@@ -13,7 +13,7 @@ class OrderEloquent extends BaseEloquent
      *
      * @var array
      */
-    protected $touches = ['orderSharedStats', 'orderItems'];
+//    protected $touches = ['orderSharedStats', 'orderItems'];
 
     /**
      * Get the status associated with the given order.
@@ -31,6 +31,14 @@ class OrderEloquent extends BaseEloquent
      */
     public function orderItems(){
         return $this->hasMany(ItemOrderEloquent::class, 'order_id');
+    }
+
+    /**
+     * Order can have many attachments.
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function attachments(){
+        return $this->hasMany(AttachmentEloquent::class, 'order_id');
     }
 
     /**

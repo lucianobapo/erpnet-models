@@ -15,13 +15,14 @@ use ErpNET\Models\v1\Criteria\ProductGroupCategoriesCriteria;
 use ErpNET\Models\v1\Entities\OrderEloquent;
 use ErpNET\Models\v1\Interfaces\AddressRepository;
 use ErpNET\Models\v1\Interfaces\OrderRepository;
+use ErpNET\Models\v1\Interfaces\OrderService;
 use ErpNET\Models\v1\Interfaces\PartnerRepository;
 use ErpNET\Models\v1\Interfaces\ProductRepository;
 use ErpNET\Delivery\v1\Entities\DeliveryPackageEloquent;
 use ErpNET\Models\v1\Interfaces\ProductGroupRepository;
 use ErpNET\Models\v1\Interfaces\SharedStatRepository;
 
-class OrderServiceEloquent
+class OrderServiceEloquent implements OrderService 
 {
 //    protected $productRepository;
 //    protected $productGroupRepository;
@@ -57,39 +58,60 @@ class OrderServiceEloquent
 
     public function changeToCancelStatus($orderId)
     {
-        $cancela = true;
+        $update = true;
         $orderFound = $this->orderRepository->find($orderId);
         foreach($orderFound->orderSharedStats as $sharedStat){
             if ($sharedStat->status==config('erpnetModels.openStatusName')) 
                 $this->orderRepository->orderSharedStatsDetach($orderFound, $sharedStat->id);
             if ($sharedStat->status==config('erpnetModels.finishStatusName'))
                 $this->orderRepository->orderSharedStatsDetach($orderFound, $sharedStat->id);
-            if ($sharedStat->status==config('erpnetModels.cancelStatusName')) 
-                $cancela = false;
+            if ($sharedStat->status==config('erpnetModels.cancelStatusName'))
+                $update = false;
         }
 
-        if ($cancela) {
+        if ($update) {
             $finishId = $this->sharedStatRepository->findWhere(["status" => config('erpnetModels.cancelStatusName')]);
             $this->orderRepository->orderSharedStatsAttach($orderFound, $finishId);
         }
         
         return $orderFound;
     }
+
+    public function changeToFinishStatus($orderId)
+    {
+        $update = true;
+        $orderFound = $this->orderRepository->find($orderId);
+        foreach($orderFound->orderSharedStats as $sharedStat){
+            if ($sharedStat->status==config('erpnetModels.openStatusName'))
+                $this->orderRepository->orderSharedStatsDetach($orderFound, $sharedStat->id);
+            if ($sharedStat->status==config('erpnetModels.finishStatusName'))
+                $update = false;
+            if ($sharedStat->status==config('erpnetModels.cancelStatusName'))
+                $this->orderRepository->orderSharedStatsDetach($orderFound, $sharedStat->id);
+        }
+
+        if ($update) {
+            $finishId = $this->sharedStatRepository->findWhere(["status" => config('erpnetModels.finishStatusName')]);
+            $this->orderRepository->orderSharedStatsAttach($orderFound, $finishId);
+        }
+
+        return $orderFound;
+    }
     
     public function changeToOpenStatus($orderId)
     {
-        $cancela = true;
+        $update = true;
         $orderFound = $this->orderRepository->find($orderId);
         foreach($orderFound->orderSharedStats as $sharedStat){            
             if ($sharedStat->status==config('erpnetModels.openStatusName'))
-                $cancela = false;
+                $update = false;
             if ($sharedStat->status==config('erpnetModels.finishStatusName'))
                 $this->orderRepository->orderSharedStatsDetach($orderFound, $sharedStat->id);
             if ($sharedStat->status==config('erpnetModels.cancelStatusName'))
                 $this->orderRepository->orderSharedStatsDetach($orderFound, $sharedStat->id);
         }
 
-        if ($cancela) {
+        if ($update) {
             $sharedStatId = $this->sharedStatRepository->findWhere(["status" => config('erpnetModels.openStatusName')]);
             $this->orderRepository->orderSharedStatsAttach($orderFound, $sharedStatId);
         }

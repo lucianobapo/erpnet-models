@@ -40,49 +40,9 @@ class OrderController extends ResourceController
     {
         try {
             if($order instanceof Model)
-                $foundData = $this->repository->find($order->id);
+                $updatedData = $this->service->changeToFinishStatus($order->id);
             else
-                $foundData = $this->repository->find($order);
-
-            $this->changeToFinishStatus($foundData);
-
-            $response = [
-                'message' => 'Resource updated.',
-                'data'    => $foundData->toArray(),
-            ];
-
-            if (request()->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect(route($this->routeName.'.index'))->with('message', $response['message']);
-
-        } catch (ValidatorException $e) {
-
-            if (request()->wantsJson()) {
-
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
-        }
-    }
-
-    public function cancel($order)
-    {
-        try {
-            if($order instanceof Model)
-//                $foundData = $this->repository->find($order->id);
-                $updatedData = $this->service->changeToCancelStatus($order->id);
-            else
-                $updatedData = $this->service->changeToCancelStatus($order);
-//                $foundData = $this->repository->find($order);
-
-//            $this->changeToCancelStatus($foundData);
+                $updatedData = $this->service->changeToFinishStatus($order);
 
             $response = [
                 'message' => 'Resource updated.',
@@ -110,35 +70,37 @@ class OrderController extends ResourceController
         }
     }
 
-    public function changeToFinishStatus(OrderEloquent $data)
+    public function cancel($order)
     {
-        $finaliza = true;
-        foreach($data->orderSharedStats as $sharedStat){
-            if ($sharedStat->status==config('erpnetModels.openStatusName')) $data->orderSharedStats()->detach($sharedStat->id);
-            if ($sharedStat->status==config('erpnetModels.cancelStatusName')) $data->orderSharedStats()->detach($sharedStat->id);
-            if ($sharedStat->status==config('erpnetModels.finishStatusName')) $finaliza = false;
-        }
+        try {
+            if($order instanceof Model)
+                $updatedData = $this->service->changeToCancelStatus($order->id);
+            else
+                $updatedData = $this->service->changeToCancelStatus($order);
 
-        if ($finaliza) {
-            $sharedStatRepository = app(SharedStatRepository::class) ;
-            $finishId = $sharedStatRepository->findWhere(["status" => config('erpnetModels.finishStatusName')]);
-            $data->orderSharedStats()->attach($finishId);
-        }
-    }
+            $response = [
+                'message' => 'Resource updated.',
+                'data'    => $updatedData->toArray(),
+            ];
 
-    public function changeToCancelStatus(OrderEloquent $data)
-    {
-        $cancela = true;
-        foreach($data->orderSharedStats as $sharedStat){
-            if ($sharedStat->status==config('erpnetModels.openStatusName')) $data->orderSharedStats()->detach($sharedStat->id);
-            if ($sharedStat->status==config('erpnetModels.finishStatusName')) $data->orderSharedStats()->detach($sharedStat->id);;
-            if ($sharedStat->status==config('erpnetModels.cancelStatusName')) $cancela = false;
-        }
+            if (request()->wantsJson()) {
 
-        if ($cancela) {
-            $sharedStatRepository = app(SharedStatRepository::class) ;
-            $finishId = $sharedStatRepository->findWhere(["status" => config('erpnetModels.cancelStatusName')]);
-            $data->orderSharedStats()->attach($finishId);
+                return response()->json($response);
+            }
+
+            return redirect(route($this->routeName.'.index'))->with('message', $response['message']);
+
+        } catch (ValidatorException $e) {
+
+            if (request()->wantsJson()) {
+
+                return response()->json([
+                    'error'   => true,
+                    'message' => $e->getMessageBag()
+                ]);
+            }
+
+            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
         }
     }
 }

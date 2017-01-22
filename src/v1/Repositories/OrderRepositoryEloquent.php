@@ -6,6 +6,7 @@ use ErpNET\Models\v1\Presenters\OrderPresenter;
 use ErpNET\Models\v1\Interfaces\OrderRepository;
 use ErpNET\Models\v1\Entities\OrderEloquent;
 use ErpNET\Models\v1\Validators\OrderValidator;
+use Prettus\Repository\Events\RepositoryEntityUpdated;
 
 /**
  * Class OrderRepositoryEloquent
@@ -27,11 +28,14 @@ class OrderRepositoryEloquent extends BaseRepositoryEloquent implements OrderRep
     public function orderSharedStatsDetach(OrderEloquent &$order, $sharedStatId)
     {
         $order->orderSharedStats()->detach($sharedStatId);
+        $order->touch();
+        event(new RepositoryEntityUpdated($this, $order));
     }
     
     public function orderSharedStatsAttach(OrderEloquent &$order, $sharedStatId)
     {
         $order->orderSharedStats()->attach($sharedStatId);
-        
+        $order->touch();
+        event(new RepositoryEntityUpdated($this, $order));
     }
 }
