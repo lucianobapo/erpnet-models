@@ -51,11 +51,38 @@ class OrderEloquent extends BaseEloquent
     }
 
     /**
-     * An Order belongs to a Address.
+     * An Order belongs to an Address.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function address() {
         return $this->belongsTo(AddressEloquent::class);
+    }
+    
+    /**
+     * An Order belongs to a sharedOrderPayment.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function sharedOrderPayment() {
+        return $this->belongsTo(SharedOrderPaymentEloquent::class);
+    }    
+    
+    /**
+     * An Order belongs to a sharedOrderType.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function sharedOrderType() {
+        return $this->belongsTo(SharedOrderTypeEloquent::class);
+    }  
+    
+    /**
+     * An Order belongs to a sharedCurrency.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function sharedCurrency() {
+        return $this->belongsTo(SharedCurrencyEloquent::class);
     }
 }
