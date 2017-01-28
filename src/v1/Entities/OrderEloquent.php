@@ -65,7 +65,7 @@ class OrderEloquent extends BaseEloquent
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function sharedOrderPayment() {
-        return $this->belongsTo(SharedOrderPaymentEloquent::class);
+        return $this->belongsTo(SharedOrderPaymentEloquent::class, 'payment_id');
     }    
     
     /**
@@ -74,7 +74,7 @@ class OrderEloquent extends BaseEloquent
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function sharedOrderType() {
-        return $this->belongsTo(SharedOrderTypeEloquent::class);
+        return $this->belongsTo(SharedOrderTypeEloquent::class, 'type_id');
     }  
     
     /**
@@ -83,6 +83,6 @@ class OrderEloquent extends BaseEloquent
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function sharedCurrency() {
-        return $this->belongsTo(SharedCurrencyEloquent::class);
+        return $this->belongsTo(SharedCurrencyEloquent::class, 'currency_id');
     }
 }
