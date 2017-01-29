@@ -6,6 +6,7 @@ use ErpNET\Models\v1\Presenters\PartnerPresenter;
 use ErpNET\Models\v1\Interfaces\PartnerRepository;
 use ErpNET\Models\v1\Entities\PartnerEloquent;
 use ErpNET\Models\v1\Validators\PartnerValidator;
+use Prettus\Repository\Events\RepositoryEntityUpdated;
 
 /**
  * Class PartnerRepositoryEloquent
@@ -17,4 +18,17 @@ class PartnerRepositoryEloquent extends BaseRepositoryEloquent implements Partne
     protected $validatorClass = PartnerValidator::class;
     protected $presenterClass = PartnerPresenter::class;
 
+    public function partnerSharedStatsDetach(PartnerEloquent &$partner, $sharedStat)
+    {
+        $partner->partnerSharedStats()->detach($sharedStat);
+        $partner->touch();
+        event(new RepositoryEntityUpdated($this, $partner));
+    }
+
+    public function partnerSharedStatsAttach(PartnerEloquent &$partner, $sharedStat)
+    {
+        $partner->partnerSharedStats()->attach($sharedStat);
+        $partner->touch();
+        event(new RepositoryEntityUpdated($this, $partner));
+    }
 }
