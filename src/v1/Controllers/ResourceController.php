@@ -35,7 +35,7 @@ abstract class ResourceController extends BaseController
      */
     protected $repository;
     /**
-     * @var OrderService
+     * @var 
      */
     protected $service;
 

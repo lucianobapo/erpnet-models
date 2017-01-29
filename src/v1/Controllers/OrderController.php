@@ -18,6 +18,11 @@ use Prettus\Validator\Exceptions\ValidatorException;
  */
 class OrderController extends ResourceController
 {
+    /**
+     * @var OrderService
+     */
+    protected $service;
+    
     protected $routeName = 'order';
     protected $repositoryClass = OrderRepository::class;
     protected $serviceClass = OrderService::class;

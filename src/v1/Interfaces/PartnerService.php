@@ -13,4 +13,9 @@ interface PartnerService
      * @return \ErpNET\Models\v1\Entities\PartnerEloquent
      */
     public function changeToActiveStatus($partner);
+    
+    /*
+     * @return \ErpNET\Models\v1\Entities\PartnerEloquent
+     */
+    public function changeToDeactivateStatus($partner);
 }

@@ -60,11 +60,9 @@ class PartnerServiceEloquent implements PartnerService
         foreach($partnerFound->partnerSharedStats as $sharedStat){
             if ($sharedStat->status==config('erpnetModels.activeStatusName'))
                 $update = false;
-            if ($sharedStat->status==config('erpnetModels.desactiveStatusName'))
-                $this->partnerRepository->partnerSharedStatsDetach($partnerFound, $sharedStat->id);
-            if ($sharedStat->status==config('erpnetModels.finishStatusName'))
-                $this->partnerRepository->partnerSharedStatsDetach($partnerFound, $sharedStat->id);
-            if ($sharedStat->status==config('erpnetModels.cancelStatusName'))
+            if ($sharedStat->status==config('erpnetModels.deactivateStatusName') ||
+                $sharedStat->status==config('erpnetModels.finishStatusName') ||
+                $sharedStat->status==config('erpnetModels.cancelStatusName'))
                 $this->partnerRepository->partnerSharedStatsDetach($partnerFound, $sharedStat->id);
         }
 
@@ -73,6 +71,26 @@ class PartnerServiceEloquent implements PartnerService
             $this->partnerRepository->partnerSharedStatsAttach($partnerFound, $sharedStatId);
         }
         
+        return $partnerFound;
+    }
+
+    public function changeToDeactivateStatus($partnerFound)
+    {
+        $update = true;
+        foreach($partnerFound->partnerSharedStats as $sharedStat){
+            if ($sharedStat->status==config('erpnetModels.deactivateStatusName'))
+                $update = false;
+            if ($sharedStat->status==config('erpnetModels.activeStatusName') ||
+                $sharedStat->status==config('erpnetModels.finishStatusName') ||
+                $sharedStat->status==config('erpnetModels.cancelStatusName'))
+                $this->partnerRepository->partnerSharedStatsDetach($partnerFound, $sharedStat->id);
+        }
+
+        if ($update) {
+            $sharedStatId = $this->sharedStatRepository->findWhere(["status" => config('erpnetModels.deactivateStatusName')]);
+            $this->partnerRepository->partnerSharedStatsAttach($partnerFound, $sharedStatId);
+        }
+
         return $partnerFound;
     }
 }
