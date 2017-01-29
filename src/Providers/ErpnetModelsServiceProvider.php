@@ -38,6 +38,7 @@ class ErpnetModelsServiceProvider extends ServiceProvider
         }
 
         $app->bind(\ErpNET\Models\v1\Interfaces\OrderService::class, \ErpNET\Models\v1\Services\OrderServiceEloquent::class);
+        $app->bind(\ErpNET\Models\v1\Interfaces\PartnerService::class, \ErpNET\Models\v1\Services\PartnerServiceEloquent::class);
 
         //Routing
         include $routesDir."api.php";

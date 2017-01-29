@@ -18,6 +18,10 @@ class PartnerRepositoryEloquent extends BaseRepositoryEloquent implements Partne
     protected $validatorClass = PartnerValidator::class;
     protected $presenterClass = PartnerPresenter::class;
 
+    protected $fieldSearchable = [
+        'nome'=>'like',
+    ];
+
     public function partnerSharedStatsDetach(PartnerEloquent &$partner, $sharedStat)
     {
         $partner->partnerSharedStats()->detach($sharedStat);
