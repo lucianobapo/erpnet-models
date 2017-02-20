@@ -49,7 +49,6 @@ $router
                 
                 $router->delete('/partner/{partner}/deactivate', ['as'=>'partner.deactivate','uses'=> 'PartnerController@deactivate']);
                 
-                $router->get('/delivery-service', ['as'=>'delivery.package','uses'=> 'DeliveryServiceController@package']);
             });
     });
 

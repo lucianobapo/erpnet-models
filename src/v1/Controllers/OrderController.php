@@ -31,7 +31,7 @@ class OrderController extends ResourceController
     /**
      * @var integer
      */
-    protected $paginateItemCount = 3;
+    protected $paginateItemCount = 13;
 
     /**
      * Criterias to load
