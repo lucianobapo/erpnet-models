@@ -26,6 +26,7 @@ class OpenOrdersCriteria implements CriteriaInterface
         $model = $model
             ->select('orders.*')
             ->with('partner')
+            ->with('partner.contacts')
             ->with('address')
             ->with('orderSharedStats')
             ->with('sharedOrderPayment')

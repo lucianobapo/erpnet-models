@@ -21,6 +21,6 @@ class PartnerEloquent extends BaseEloquent
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function contacts(){
-        return $this->hasMany(AddressEloquent::class, 'partner_id');
+        return $this->hasMany(ContactEloquent::class, 'partner_id');
     }
 }

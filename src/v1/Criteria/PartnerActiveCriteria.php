@@ -23,6 +23,7 @@ class PartnerActiveCriteria implements CriteriaInterface
     {
         $model = $model
             ->select('partners.*')
+            ->with('contacts')
             ->join('partner_shared_stat', 'partners.id', '=', 'partner_shared_stat.partner_id')
             ->join('shared_stats', 'partner_shared_stat.shared_stat_id', '=', 'shared_stats.id')
             ->where('shared_stats.status', '=', config('erpnetModels.activeStatusName'))
