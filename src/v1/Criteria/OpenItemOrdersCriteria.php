@@ -24,6 +24,7 @@ class OpenItemOrdersCriteria implements CriteriaInterface
         $model = $model
             ->select('item_orders.*')
             ->with('product')
+            ->with('product.productProductGroups')
             ->with('order')
             ->with('order.sharedOrderType')
 
