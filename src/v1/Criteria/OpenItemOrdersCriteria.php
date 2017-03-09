@@ -21,18 +21,22 @@ class OpenItemOrdersCriteria implements CriteriaInterface
      */
     public function apply($model, RepositoryInterface $repository)
     {
-//        $aux = new \Illuminate\Database\Query\Builder;
-//        $aux->orderBy();
         $model = $model
             ->select('item_orders.*')
             ->with('product')
             ->with('order')
-            ->with('order.orderSharedStats')
             ->with('order.sharedOrderType')
+
+            ->join('product_product_group', 'item_orders.product_id', '=', 'product_product_group.product_id')
+//            ->join('product_groups', 'product_product_group.product_group_id', '=', 'product_groups.id')
+//            ->where('product_groups.grupo', '=', 'Delivery')
+            ->where('product_product_group.product_group_id', '=', config('erpnetModels.productDeliveryId'))
+
+            ->join('product_shared_stat', 'item_orders.product_id', '=', 'product_shared_stat.product_id')
+            ->where('product_shared_stat.shared_stat_id', '=', config('erpnetModels.activeStatusId'))
+
             ->join('order_shared_stat', 'item_orders.order_id', '=', 'order_shared_stat.order_id')
-            ->join('shared_stats', 'order_shared_stat.shared_stat_id', '=', 'shared_stats.id')
-            ->where('shared_stats.status', '=', config('erpnetModels.finishStatusName'))
-            ->orderBy('posted_at', 'desc');
+            ->where('order_shared_stat.shared_stat_id', '=', config('erpnetModels.finishStatusId'))
         ;
 
         return $model;
