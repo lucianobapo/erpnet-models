@@ -19,4 +19,12 @@ class UserEloquent extends BaseEloquent
     {
         return (array_search($this->email, explode(',', env('ADMIN_EMAILS', 'luciano.bapo@gmail.com')))!==false);
     }
+
+    /**
+     * User can have many providers.
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function providers(){
+        return $this->hasMany(ProviderEloquent::class, 'provider_id');
+    }
 }
