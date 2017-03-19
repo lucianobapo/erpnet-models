@@ -4,6 +4,7 @@ namespace ErpNET\Models\v1\Controllers;
 
 use ErpNET\Models\v1\Interfaces\UserRepository;
 use ErpNET\Models\v1\Validators\UserValidator;
+use ErpNET\Models\v1\Criteria\UserActiveCriteria;
 
 /**
  * User resource representation.
@@ -25,6 +26,8 @@ class UserController extends ResourceController
      * Criterias to load
      * @var array
      */
-    protected $defaultCriterias = [];
+    protected $defaultCriterias = [
+        UserActiveCriteria::class
+    ];
 
 }

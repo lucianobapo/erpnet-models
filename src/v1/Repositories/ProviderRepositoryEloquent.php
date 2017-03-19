@@ -12,4 +12,9 @@ use ErpNET\Models\v1\Entities\ProviderEloquent;
 class ProviderRepositoryEloquent extends BaseRepositoryEloquent implements ProviderRepository
 {
     protected $modelClass = ProviderEloquent::class;
+
+    protected $fieldSearchable = [
+        'provider',
+        'provider_id',
+    ];
 }

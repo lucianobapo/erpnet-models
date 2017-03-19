@@ -16,10 +16,7 @@ class UserRepositoryEloquent extends BaseRepositoryEloquent implements UserRepos
     protected $validatorClass = UserValidator::class;
 
     protected $fieldSearchable = [
+        'email',
         'provider_id',
-//        'product.name',
-//        'name'=>'like',
-//        'email', // Default Condition "="
-//        'your_field'=>'condition'
     ];
 }
