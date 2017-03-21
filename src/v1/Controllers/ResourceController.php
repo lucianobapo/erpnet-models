@@ -109,8 +109,6 @@ abstract class ResourceController extends BaseController
      */
     public function show($id)
     {
-        list($render, $allData) = $this->getIndexData();
-
         if($id instanceof Model)
             $foundData = $id;
         else
@@ -122,6 +120,8 @@ abstract class ResourceController extends BaseController
                 'data' => $foundData,
             ]);
         }
+
+        list($render, $allData) = $this->getIndexData();
 
         $formConfig = [
             'method' => 'PUT',
