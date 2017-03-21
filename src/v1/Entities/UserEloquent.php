@@ -25,6 +25,6 @@ class UserEloquent extends BaseEloquent
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function providers(){
-        return $this->hasMany(ProviderEloquent::class, 'provider_id');
+        return $this->hasMany(ProviderEloquent::class, 'user_id');
     }
 }

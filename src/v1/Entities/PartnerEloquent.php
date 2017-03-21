@@ -17,6 +17,16 @@ class PartnerEloquent extends BaseEloquent
     }
 
     /**
+     * Get the groups associated with the given partner.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function partnerGroups() {
+        return $this->belongsToMany(PartnerGroupEloquent::class, 'partner_partner_group', 'partner_id', 'partner_group_id')
+            ->withTimestamps();
+    }
+
+    /**
      * Partner can have many contacts.
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

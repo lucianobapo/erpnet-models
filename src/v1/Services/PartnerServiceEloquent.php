@@ -54,6 +54,20 @@ class PartnerServiceEloquent implements PartnerService
         $this->sharedStatRepository = $sharedStatRepository;
     }
     
+    public function setToClientGroup($partnerFound)
+    {
+        $update = true;
+        foreach($partnerFound->partnerGroups as $group){
+            if ($group->id==config('erpnetModels.clientGroupId'))
+                $update = false;
+        }
+
+        if ($update)
+            $this->partnerRepository->partnerGroupsAttach($partnerFound, config('erpnetModels.clientGroupId'));
+        
+        return $partnerFound;
+    }
+
     public function changeToActiveStatus($partnerFound)
     {
         $update = true;
@@ -66,11 +80,9 @@ class PartnerServiceEloquent implements PartnerService
                 $this->partnerRepository->partnerSharedStatsDetach($partnerFound, $sharedStat->id);
         }
 
-        if ($update) {
-            $sharedStatId = $this->sharedStatRepository->findWhere(["status" => config('erpnetModels.activeStatusName')]);
-            $this->partnerRepository->partnerSharedStatsAttach($partnerFound, $sharedStatId);
-        }
-        
+        if ($update)
+            $this->partnerRepository->partnerSharedStatsAttach($partnerFound, config('erpnetModels.activeStatusId'));
+
         return $partnerFound;
     }
 
@@ -86,10 +98,8 @@ class PartnerServiceEloquent implements PartnerService
                 $this->partnerRepository->partnerSharedStatsDetach($partnerFound, $sharedStat->id);
         }
 
-        if ($update) {
-            $sharedStatId = $this->sharedStatRepository->findWhere(["status" => config('erpnetModels.deactivateStatusName')]);
-            $this->partnerRepository->partnerSharedStatsAttach($partnerFound, $sharedStatId);
-        }
+        if ($update)
+            $this->partnerRepository->partnerSharedStatsAttach($partnerFound, config('erpnetModels.deactivateStatusId'));
 
         return $partnerFound;
     }

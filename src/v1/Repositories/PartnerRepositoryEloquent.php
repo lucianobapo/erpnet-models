@@ -35,4 +35,11 @@ class PartnerRepositoryEloquent extends BaseRepositoryEloquent implements Partne
         $partner->touch();
         event(new RepositoryEntityUpdated($this, $partner));
     }
+
+    public function partnerGroupsAttach(PartnerEloquent &$partner, $partnerGroup)
+    {
+        $partner->partnerGroups()->attach($partnerGroup);
+        $partner->touch();
+        event(new RepositoryEntityUpdated($this, $partner));
+    }
 }
