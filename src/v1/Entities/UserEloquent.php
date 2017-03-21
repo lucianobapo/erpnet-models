@@ -42,6 +42,6 @@ class UserEloquent extends BaseEloquent
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function partner() {
-        return $this->hasOne(PartnerEloquent::class);
+        return $this->hasOne(PartnerEloquent::class, 'user_id');
     }
 }
