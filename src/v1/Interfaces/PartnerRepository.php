@@ -14,4 +14,6 @@ interface PartnerRepository extends BaseRepository
     public function partnerSharedStatsDetach(PartnerEloquent &$partner, $sharedStat);
 
     public function partnerSharedStatsAttach(PartnerEloquent &$partner, $sharedStat);
+
+    public function partnerGroupsAttach(PartnerEloquent &$partner, $partnerGroup);
 }
