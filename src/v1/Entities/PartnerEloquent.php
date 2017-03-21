@@ -6,6 +6,8 @@ class PartnerEloquent extends BaseEloquent
 {
     protected $table = 'partners';
 
+    protected $dates = ['data_nascimento'];
+
     /**
      * Get the status associated with the given partner.
      *
@@ -32,5 +34,14 @@ class PartnerEloquent extends BaseEloquent
      */
     public function contacts(){
         return $this->hasMany(ContactEloquent::class, 'partner_id');
+    }
+
+    /**
+     * A Partner belongs to an User.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user() {
+        return $this->belongsTo(UserEloquent::class);
     }
 }
