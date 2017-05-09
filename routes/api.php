@@ -44,10 +44,13 @@ $router
                     }
                 }
 
-                $router->delete('/order/{order}/finish', ['as'=>'order.finish','uses'=> 'OrderController@finish']);
-                $router->delete('/order/{order}/cancel', ['as'=>'order.cancel','uses'=> 'OrderController@cancel']);
-                
-                $router->delete('/partner/{partner}/deactivate', ['as'=>'partner.deactivate','uses'=> 'PartnerController@deactivate']);
+                if(array_has(config('erpnetMigrates.tables'),'partners'))
+                    $router->delete('/partner/{partner}/deactivate', ['as'=>'partner.deactivate','uses'=> 'PartnerController@deactivate']);
+
+                if(array_has(config('erpnetMigrates.tables'),'orders')){
+                    $router->delete('/order/{order}/finish', ['as'=>'order.finish','uses'=> 'OrderController@finish']);
+                    $router->delete('/order/{order}/cancel', ['as'=>'order.cancel','uses'=> 'OrderController@cancel']);
+                }
                 
             });
     });

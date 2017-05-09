@@ -29,8 +29,8 @@ class ErpnetModelsServiceProvider extends ServiceProvider
         //Bind Interfaces
         foreach (config('erpnetMigrates.tables') as $table => $config) {
             $routePrefix = isset($config['routePrefix'])?$config['routePrefix']:str_singular($table);
-            $bindInterface = '\\ErpNET\\Models\\v1\\Interfaces\\'.(isset($config['bindInterface'])?$config['bindInterface']:(ucfirst(camel_case($routePrefix)).'Repository'));
-            $bindRepository = '\\ErpNET\\Models\\v1\\Repositories\\'.(isset($config['bindRepository'])?$config['bindRepository']:(ucfirst(camel_case($routePrefix)).'RepositoryEloquent'));
+            $bindInterface = 'ErpNET\\Models\\v1\\Interfaces\\'.(isset($config['bindInterface'])?$config['bindInterface']:(ucfirst(camel_case($routePrefix)).'Repository'));
+            $bindRepository = 'ErpNET\\Models\\v1\\Repositories\\'.(isset($config['bindRepository'])?$config['bindRepository']:(ucfirst(camel_case($routePrefix)).'RepositoryEloquent'));
 
             if(interface_exists($bindInterface)  && class_exists($bindRepository)){
                 $app->bind($bindInterface, $bindRepository);
