@@ -35,6 +35,11 @@ abstract class BaseEloquent extends Model
         parent::__construct($attributes);
     }
 
+    protected function getDateFormat()
+    {
+        return 'Y-m-d H:i:se';
+    }
+
     /**
      * Implement fields to be exposed
      * @return array
