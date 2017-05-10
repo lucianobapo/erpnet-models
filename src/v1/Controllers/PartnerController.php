@@ -19,7 +19,8 @@ class PartnerController extends ResourceController
     protected $repositoryClass = PartnerRepository::class;
     protected $serviceClass = PartnerService::class;
     protected $validatorClass = PartnerValidator::class;
-    
+
+    protected $paginateItemCount=3;
     /**
      * Criterias to load
      * @var array
