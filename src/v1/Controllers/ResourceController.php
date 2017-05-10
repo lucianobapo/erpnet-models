@@ -98,6 +98,7 @@ abstract class ResourceController extends BaseController
                 $totalPages = ((int)($totalCount / count($allData))) + (($totalCount % count($allData)) > 0 ? 1 : 0);
                 $perPage = count($allData);
                 $currentPage = isset(app('request')->query()['page'])?app('request')->query()['page']:1;
+
                 $currentPageFrom = (($currentPage-1)*$perPage)+1;
                 $currentPageTo = $currentPageFrom+$perPage-1;
 
