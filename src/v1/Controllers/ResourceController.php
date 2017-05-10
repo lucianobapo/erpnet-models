@@ -95,7 +95,7 @@ abstract class ResourceController extends BaseController
                 'data' => $allData,
             ];
             if($this->paginateItemCount!==-1){
-                $totalPages = ((int)($totalCount / $this->paginateItemCount)) + (($totalCount % count($allData)) > 0 ? 1 : 0);
+                $totalPages = ((int)($totalCount / $this->paginateItemCount)) + (($totalCount % $this->paginateItemCount) > 0 ? 1 : 0);
                 $perPage = count($allData);
                 $currentPage = isset(app('request')->query()['page'])?app('request')->query()['page']:1;
 
