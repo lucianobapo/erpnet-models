@@ -91,9 +91,21 @@ abstract class ResourceController extends BaseController
 
         if (request()->wantsJson()) {
 
-            return response()->json([
+            $responseData = [
                 'data' => $allData,
-            ]);
+            ];
+            if($this->paginateItemCount!==-1){
+                logger('counting per page:');
+                logger(count($allData));
+                $responseData['pagination'] = [
+                    'total' => 0,
+                    'per_page' => 2,
+                    'from' => 1,
+                    'to' => 0,
+                    'current_page' => 1,
+                ];
+            };
+            return response()->json($responseData);
         }
 
         //Render welcome if view with route's name not available
