@@ -103,7 +103,7 @@ abstract class ResourceController extends BaseController
 
                 $responseData['pagination'] = [
                     'total' => $totalCount,
-                    'total_pages' => $totalPages,
+                    'last_page' => $totalPages,
                     'per_page' => $perPage,
                     'from' => $currentPageFrom,
                     'to' => $currentPageTo,
