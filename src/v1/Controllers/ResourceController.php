@@ -87,7 +87,7 @@ abstract class ResourceController extends BaseController
      */
     public function index()
     {
-        list($render, $allData) = $this->getIndexData();
+        list($render, $allData, $totalCount) = $this->getIndexData();
 
         if (request()->wantsJson()) {
 
@@ -95,11 +95,14 @@ abstract class ResourceController extends BaseController
                 'data' => $allData,
             ];
             if($this->paginateItemCount!==-1){
-                logger('counting per page:');
-                logger(count($allData));
+                logger('division:');
+                $inteiro = (int)($totalCount / count($allData));
+                $resto = $totalCount % count($allData);
+                logger($inteiro);
+                logger($resto);
                 $responseData['pagination'] = [
-                    'total' => 0,
-                    'per_page' => 2,
+                    'total' => $totalCount,
+                    'per_page' => count($allData),
                     'from' => 1,
                     'to' => 0,
                     'current_page' => 1,
@@ -308,9 +311,10 @@ abstract class ResourceController extends BaseController
                 $this->repository->pushCriteria(app($defaultCriteria));
         }
 
-        if($this->paginateItemCount===-1)
-            $data = $this->repository;
-        else
+        $data = $this->repository;
+        $totalCount = count($this->repository->all());
+
+        if($this->paginateItemCount!==-1)
             $data = $this->repository->paginate($this->paginateItemCount>0?$this->paginateItemCount:null);
 
         if (is_object($data)) {
@@ -318,16 +322,16 @@ abstract class ResourceController extends BaseController
             if (method_exists($data, 'render') && is_callable([$data, 'render']))
                 $render = $data->render();
             $allData = $data->all();
-            return array($render, $allData);
+            return array($render, $allData, $totalCount);
         }
 
         if (is_array($data)) {
             $render = null;
             $allData = $data['data'];
-            return array($render, $allData);
+            return array($render, $allData, $totalCount);
         }
 
-        return array(null, null);
+        return array(null, null, null);
     }
 
     /**
