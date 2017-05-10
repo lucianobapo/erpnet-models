@@ -95,17 +95,21 @@ abstract class ResourceController extends BaseController
                 'data' => $allData,
             ];
             if($this->paginateItemCount!==-1){
-                logger('division:');
-                $inteiro = (int)($totalCount / count($allData));
-                $resto = $totalCount % count($allData);
-                logger($inteiro);
-                logger($resto);
+                logger('page:');
+                logger(app('request')->query());
+                $totalPages = ((int)($totalCount / count($allData))) + (($totalCount % count($allData)) > 0 ? 1 : 0);
+                $perPage = count($allData);
+                $currentPage = 1;
+                $currentPageFrom = (($currentPage-1)*$perPage)+1;
+                $currentPageTo = $currentPageFrom+$perPage;
+
                 $responseData['pagination'] = [
                     'total' => $totalCount,
-                    'per_page' => count($allData),
-                    'from' => 1,
-                    'to' => 0,
-                    'current_page' => 1,
+                    'total_pages' => $totalPages,
+                    'per_page' => $perPage,
+                    'from' => $currentPageFrom,
+                    'to' => $currentPageTo,
+                    'current_page' => $currentPage,
                 ];
             };
             return response()->json($responseData);
