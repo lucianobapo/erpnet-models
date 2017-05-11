@@ -103,4 +103,9 @@ class PartnerServiceEloquent implements PartnerService
 
         return $partnerFound;
     }
+
+    public function create(array $attributes)
+    {
+        return $this->changeToActiveStatus($this->partnerRepository->create($attributes));
+    }
 }

@@ -23,4 +23,9 @@ interface PartnerService
      * @return \ErpNET\Models\v1\Entities\PartnerEloquent
      */
     public function setToClientGroup($partner);
+
+    /*
+     * @return \ErpNET\Models\v1\Entities\PartnerEloquent
+     */
+    public function create(array $attributes);
 }
