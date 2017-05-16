@@ -19,7 +19,7 @@
     "ext-mbstring": "*",
     "ext-xml": "*",
     "ext-zip": "*",
-    "dingo/api": "^1.1",
+    "dingo/api": "dev-master",
     "barryvdh/laravel-cors": "^0.8.2",
     "prettus/l5-repository": "^2.6"
   },
@@ -27,10 +27,6 @@
   },
 
   "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/lucianobapo/api.git"
-    }
   ],
   "autoload": {
     "psr-4": {
