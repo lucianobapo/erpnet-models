@@ -35,6 +35,12 @@ $router
                     'uses'=> 'ApiController@appVersion'
                 ]);
 
+                $router->get('config/erpnetMigrates', ['as'=>'config', 'uses'=>function () {
+                    return response()->json([
+                        'data' => config('erpnetMigrates'),
+                    ]);
+                }]);
+
                 foreach (config('erpnetMigrates.tables') as $table => $config) {
                     $routePrefix = isset($config['routePrefix'])?$config['routePrefix']:str_singular($table);
                     $routeController = isset($config['routeController'])?$config['routeController']:(ucfirst(camel_case($routePrefix)).'Controller');
